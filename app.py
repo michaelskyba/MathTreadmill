@@ -31,18 +31,18 @@ Session(app)
 # Configure the database
 db = SQL("sqlite:///mt.db")
 
+# Used for checking if the user is logged in
+def get_user():
+    if "username" in session.keys():
+        return session["username"]
+    else:
+        return ""
 
 # Homepage
 @app.route("/")
 def index():
-    # Check if user is logged in
-    if not "username" in session.keys():
-        user = ""
-    else:
-        user = session["username"]
-
     # Serves the index.html page
-    return render_template("index.html", user=user)
+    return render_template("index.html", user=get_user())
 
 # Sign in page
 @app.route("/signin")
