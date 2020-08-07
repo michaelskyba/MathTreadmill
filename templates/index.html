@@ -14,11 +14,12 @@
 					<a style="font-size: 30px;" href="/">MathTreadmill</a>
 				</div>
 				<div class="item account">
+					{% if user == "" %}
 					<a href="/signin">Sign in</a>
 					<a href="/register">Register</a>
-					<!--
-	     <a href="/profile" style="grid-column: span 2;">ZeroFollowers</a>
-					-->
+					{% else %}
+					<a href="/profile" style="grid-column: span 2;">{{ user }}</a>
+					{% endif %}
 				</div>
 			</div>
 			<div class="item auto" style="grid-row: 2;">
