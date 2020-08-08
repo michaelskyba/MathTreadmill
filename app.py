@@ -45,10 +45,18 @@ def index():
     return render_template("index.html", user=get_user())
 
 # Sign in page
-@app.route("/signin")
+@app.route("/signin", methods=["GET", "POST"])
 def signin():
-    session["username"] = "it works!"
-    return redirect("/")
+    if request.method == "GET":
+        # If the user isn't logged in, serve them the login page
+        if get_user() == "":
+            return render_template("signin.html", status="")
 
+        # If someone who is logged in is trying to break the site by going to /signin, kick them off
+        return redirect("/")
+    
+    if request.form.get("username") == "yeah":
+        return redirect("/")
 
+    return render_template("signin.html", status="")
 

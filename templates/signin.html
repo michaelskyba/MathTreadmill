@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Sign in </title>
+		<link href="static/signin.css" rel="stylesheet">
+	</head>
+	<body>
+		<div style="margin: 20px;" id="page">
+			<div id="header">
+				<a style="font-size: 30px;" href="/">MathTreadmill</a>
+				<div id="account">
+					<a href="/signin">Sign in</a>
+					<a href="/register">Register</a>
+				</div>
+			</div>
+			<form id="content" style="grid-row: 2;" action="/signin" method="POST">
+				<p style="font-size: 35px; margin-bottom: 10px; align-self: end;">Sign in</p>
+				<p id="status" style="margin: 0; color: red;">{{ status }}</p>
+
+				<input id="username" name="username" type="text" placeholder="Username">
+				<input id="password" name="password" type="password" placeholder="Password">
+				<input type="button" id="submit_button" style="margin-top: 10px; margin-bottom: 20px;" value="Submit">
+
+				<a onclick="alert('hahaha')" style="color: blue; text-decoration: underline;">Forgot your password?</a>
+			</form>
+		</div>
+
+		<script src="static/signin.js"></script>
+	</body>
+</html>
