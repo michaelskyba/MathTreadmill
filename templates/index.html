@@ -10,10 +10,8 @@
 	<body>
 		<div style="margin: 20px;" id="page">
 			<div id="header">
-				<div class="item">
-					<a style="font-size: 30px;" href="/">MathTreadmill</a>
-				</div>
-				<div class="item account">
+				<a style="font-size: 30px;" href="/">MathTreadmill</a>
+				<div class="account">
 					{% if user == "" %}
 					<a href="/signin">Sign in</a>
 					<a href="/register">Register</a>
@@ -23,11 +21,11 @@
 					{% endif %}
 				</div>
 			</div>
-			<div class="item auto" style="grid-row: 2;">
+			<div class="auto" style="grid-row: 2;">
 				<a class="game" href="/auto">Auto</a>
 				<p style="margin-top: 0;">MathTreadmill will automatically generate a workout</p>
 			</div>
-			<div class="item custom" style="grid-row: 4;">
+			<div class="custom" style="grid-row: 4;">
 				<a class="game" href="/custom">Custom</a>
 				<p style="margin-top: 0;">Create your own workout</p>
 			</div>

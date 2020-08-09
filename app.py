@@ -70,6 +70,7 @@ def signin():
 
     # Updates local dictionary, thereby actually loggin the user in
     session["username"] = request.form.get("username")
+    session["skill"] = query[0]["autoprogress"]
 
     # Redirects them to the homepage
     return redirect("/")
@@ -95,6 +96,7 @@ def register():
 
     # Sets local dictionary to store user's information
     session["username"] = request.form.get("username")
+    session["skill"] = "1.1"
 
     # Adds them to the database
     db.execute('INSERT INTO users (username, hash, autoprogress) VALUES(:username, :password_hash, "1.1");',
@@ -103,6 +105,49 @@ def register():
 
     # Redirects them to the homepage
     return redirect("/")
+
+
+# View your profile
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+    # Check if some bully is trying to break the site by going to /profile while not logged in
+    if get_user() == "":
+        return redirect("/")
+
+    # User is visiting their profile page
+    if request.method == "GET":
+        return render_template("profile.html", username=session["username"], skill=session["skill"])
+
+    # User has just submitted a form
+
+    # The user is trying to change their username
+    if request.form.get("type") == "username":
+
+        # Make sure user isn't trying to change their username to a username that is taken
+        if len(db.execute("SELECT * FROM users WHERE username=:username;", username=request.form.get("one"))) != 0:
+            return render_template("profile.html", username=session["username"],
+                                    skill=session["skill"],
+                                    status="That username is already taken, sorry")
+
+        # Nothing wrong happened, so we can update the user's username
+        db.execute("UPDATE users SET username=:new WHERE username=:old;", new=request.form.get("one"), old=session["username"])
+        session["username"] = request.form.get("one")
+        return render_template("profile.html", username=session["username"], skill=session["skill"])
+    
+    # The user is trying to change their password
+    
+    # Make sure user typed in the correct old password
+    query = db.execute("SELECT * FROM users WHERE username=:username;", username=session["username"])
+    if not check_password_hash(query[0]["hash"], request.form.get("one")):
+        return render_template("profile.html", username=session["username"],
+                                skill=session["skill"],
+                                status="Incorrect old password. If you forgot your password, you will be very upset soon")
+
+    # Nothing wrong happened, so we can change their password
+    db.execute("UPDATE users SET hash=:password_hash WHERE username=:username",
+                password_hash=generate_password_hash(request.form.get("two"), "pbkdf2:sha256", 8),
+                username=session["username"])
+    return render_template("profile.html", username=session["username"], skill=session["skill"], status="password changed successfully")
 
 
 # Let user log out of their account
