@@ -1,0 +1,45 @@
+
+
+a
+{
+	color: #61615A;
+}
+
+#page
+{
+	display: grid;
+	grid-template-rows: auto 4fr 3fr;
+	height: calc(100vh - 44px);
+}
+
+#header
+{
+	display: grid;
+	grid-template-columns: 1fr auto;
+}
+
+#account
+{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 10px;
+	place-items: center;
+}
+
+#content
+{
+	display: grid;
+	place-items: center;
+	grid-template-rows: 1fr;
+}
+
+#username
+{
+	margin-top: 10px;
+       	margin-bottom: 10px;
+}
+
+#confirmation
+{
+	margin-top: 10px;
+}

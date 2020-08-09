@@ -38,11 +38,13 @@ def get_user():
     else:
         return ""
 
+
 # Homepage
 @app.route("/")
 def index():
     # Serves the index.html page
     return render_template("index.html", user=get_user())
+
 
 # Sign in page
 @app.route("/signin", methods=["GET", "POST"])
@@ -55,8 +57,60 @@ def signin():
         # If someone who is logged in is trying to break the site by going to /signin, kick them off
         return redirect("/")
     
-    if request.form.get("username") == "yeah":
+    # If the user just submitted the sign in form
+    query = db.execute("SELECT * FROM users WHERE username=:username;",
+            username=request.form.get("username"))
+
+    # Make sure they typed in valid login info
+    if len(query) != 1:
+        return render_template("signin.html", status="Incorrect username/password, lol")
+
+    if not check_password_hash(query[0]["hash"], request.form.get("password")):
+        return render_template("signin.html", status="Incorrect username/password, lol")
+
+    # Updates local dictionary, thereby actually loggin the user in
+    session["username"] = request.form.get("username")
+
+    # Redirects them to the homepage
+    return redirect("/")
+
+
+# Register page
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "GET":
+        # If the user isn't logged in, serve them the register page
+        if get_user() == "":
+            return render_template("register.html", status="")
+
+        # If someone who is logged in is trying to break the site by going to /register, kick them off
         return redirect("/")
 
-    return render_template("signin.html", status="")
+    # If a user just submitted the register form
+    query = db.execute("SELECT * FROM users WHERE username=:username;", username=request.form.get("username"))
+
+    # Make sure username isn't already taken
+    if len(query) != 0:
+        return render_template("register.html", status="Username already taken, lol")
+
+    # Sets local dictionary to store user's information
+    session["username"] = request.form.get("username")
+
+    # Adds them to the database
+    db.execute('INSERT INTO users (username, hash, autoprogress) VALUES(:username, :password_hash, "1.1");',
+                username=session["username"],
+                password_hash=generate_password_hash(request.form.get("password"), "pbkdf2:sha256", 8))
+
+    # Redirects them to the homepage
+    return redirect("/")
+
+
+# Let user log out of their account
+@app.route("/logout")
+def logout():
+    # Clear the saved information about the user
+    session.clear()
+
+    # Send them back to the homepage
+    return redirect("/")
 
