@@ -37,7 +37,6 @@ document.getElementById("music").onclick = function()
 	}
 	else
 	{
-		hello
 		if (!paused)
 		{
 			music.pause();
