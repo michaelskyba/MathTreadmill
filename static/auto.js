@@ -1,3 +1,8 @@
+// Yes, this code is an ugly mess
+// This is a small project so I didn't spend time making it clean/efficient
+// As you can see, there aren't even any comments
+// If this was a larger project, the code would be much more readable
+
 let roots = [0, "square", "cube", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth"]
 
 let started = false;
@@ -16,9 +21,53 @@ let signed_in;
 bar = document.getElementById("time_bar");
 document.getElementById("answer").focus()
 
+let clicked = false;
+let paused = false;
+let loaded = true;
+let music;
+document.getElementById("music").onclick = function()
+{
+	if (!clicked)
+	{
+		clicked = true;
+		music = new Audio(`static/music/${RNG(1, 6)}.mp3`)
+		music.addEventListener('ended', function(){ this.src = `static/music/${RNG(1, 6)}.mp3`; this.currentTime = 0; this.play(); }, false);
+		music.play()
+		document.getElementById("music").value = "Turn off Dark Souls music";
+	}
+	else
+	{
+		hello
+		if (!paused)
+		{
+			music.pause();
+			music.currentTime = 0;
+			paused = true;
+			document.getElementById("music").value = "Dark Souls music";
+		}
+		else
+		{
+			music.src = `static/music/${RNG(1, 6)}.mp3`;
+			music.play();
+			paused = false;
+			document.getElementById("music").value = "Turn off Dark Souls music";
+		}
+	}
+
+}
+if (document.getElementById("audio_input").value == "yes")
+{
+	clicked = true;
+	loaded = false;
+	document.getElementById("music").style.display = "none";
+	document.getElementById("music").value = "Turn off Dark Souls music";
+	music = new Audio(`static/music/${document.getElementById("song_input").value}.mp3`);
+	music.currentTime = document.getElementById("time_input").value;
+}
+
 document.getElementById("load").onclick = function()
 {
-	alert("Save codes are meant for people to save their progress in /auto without making an account")
+	alert("Save codes are used to save your progress in /auto without making an account")
 	let code = prompt("Enter your code now:")
 	if (!code == false)
 	{
@@ -110,6 +159,13 @@ if (skill != 1.1) document.getElementById("tip").innerHTML = "Submitting an inco
 
 document.onkeydown = function (e)
 {  
+	if (!loaded)
+	{
+		music.play();
+		document.getElementById("music").style.display = "block";
+		loaded = true;
+	}
+
 	e = e || window.event;
 	if (e.keyCode == 13)
 	{
@@ -154,6 +210,13 @@ document.onkeydown = function (e)
 					if (signed_in)
 					{
 						document.getElementById("skill_input").value = skill;
+
+						if (clicked && !paused)
+						{
+							document.getElementById("audio_input").value = "yes";
+							document.getElementById("song_input").value = music.src;
+							document.getElementById("time_input").value = music.currentTime;
+						}
 						document.getElementById("skill_form").submit();
 						make = false;
 					}
@@ -306,128 +369,128 @@ function generate_question(skill)
 		case 1.1:
 			x = RNG(0, 10);
 			y = RNG(0, 10);
-			if (RNG(0, 1) == 1) return [`${x} + ${y}`, x + y];
+			if (RNG(1, 2) == 1) return [`${x} + ${y}`, x + y];
 			return [`${x + y} - ${y}`, x];
 
 		case 1.2:
 			x = RNG(0, 20);
 			y = RNG(0, 20);
-			if (RNG(0, 1) == 1) return [`${x} + ${y}`, x + y];
+			if (RNG(1, 2) == 1) return [`${x} + ${y}`, x + y];
 			return [`${x + y} - ${y}`, x];
 
 		case 1.3:
 			x = RNG(-15, 15)
 			y = RNG(-15, 15)
-			if (RNG(0, 1) == 1) return [`${z(x)} + ${z(y)}`, x + y];
+			if (RNG(1, 2) == 1) return [`${z(x)} + ${z(y)}`, x + y];
 			return [`${z(x + y)} - ${z(y)}`, x];
 
 		case 1.4:
 			x = RNG(-50, 50)
 			y = RNG(-50, 50)
-			if (RNG(0, 1) == 1) return [`${z(x)} + ${z(y)}`, x + y];
+			if (RNG(1, 2) == 1) return [`${z(x)} + ${z(y)}`, x + y];
 			return [`${z(x + y)} - ${z(y)}`, x];
 
 		case 2.1:
 			x = RNG(2, 10)
 			y = RNG(2, 10)
-			if (RNG(0, 1) == 1) return [`${x} × ${y}`, x*y]
+			if (RNG(1, 2) == 1) return [`${x} × ${y}`, x*y]
 			return [`${x * y} ÷ ${y}`, x]
 
 		case 2.2:
 			x = RNG(-10, 10)
 			y = RNG(-10, 10)
-			if (RNG(0, 1) == 1) return [`${z(x)} × ${z(y)}`, x*y]
+			if (RNG(1, 2) == 1) return [`${z(x)} × ${z(y)}`, x*y]
 			return [`${z(x * y)} ÷ ${z(y)}`, x]
 
 		case 2.3:
 			x = RNG(-14, 14)
 			y = RNG(-14, 14)
-			if (RNG(0, 1) == 1) return [`${z(x)} × ${z(y)}`, x*y]
+			if (RNG(1, 2) == 1) return [`${z(x)} × ${z(y)}`, x*y]
 			return [`${z(x * y)} ÷ ${z(y)}`, x]
 
 		case 2.4:
 			x = RNG(-20, 20)
 			y = RNG(-20, 20)
-			if (RNG(0, 1) == 1) return [`${z(x)} × ${z(y)}`, x*y]
+			if (RNG(1, 2) == 1) return [`${z(x)} × ${z(y)}`, x*y]
 			return [`${z(x * y)} ÷ ${z(y)}`, x]
 
 		case 3.1:
-			if (RNG(0, 1) == 1)
+			if (RNG(1, 2) == 1)
 			{
 				x = RNG(-14, 14);
 				y = RNG(-14, 14);
-				if (RNG(0, 1) == 1) return [`${z(x)} × ${z(y)}`, x*y]
+				if (RNG(1, 2) == 1) return [`${z(x)} × ${z(y)}`, x*y]
 				return [`${z(x * y)} ÷ ${z(y)}`, x]
 			}
 			x = RNG(-25, 25)
 			y = RNG(-25, 25)
-			if (RNG(0, 1) == 1) return [`${z(x)} + ${z(y)}`, x + y];
+			if (RNG(1, 2) == 1) return [`${z(x)} + ${z(y)}`, x + y];
 			return [`${z(x + y)} - ${z(y)}`, x];
 
 		case 3.2:
-			if (RNG(0, 1) == 1)
+			if (RNG(1, 2) == 1)
 			{
 				x = RNG(-16, 16);
 				y = RNG(-16, 16);
-				if (RNG(0, 1) == 1) return [`${z(x)} × ${z(y)}`, x*y]
+				if (RNG(1, 2) == 1) return [`${z(x)} × ${z(y)}`, x*y]
 				return [`${z(x * y)} ÷ ${z(y)}`, x]
 			}
 			x = RNG(-35, 35)
 			y = RNG(-35, 35)
-			if (RNG(0, 1) == 1) return [`${z(x)} + ${z(y)}`, x + y];
+			if (RNG(1, 2) == 1) return [`${z(x)} + ${z(y)}`, x + y];
 			return [`${z(x + y)} - ${z(y)}`, x];
 
 		case 3.3:
-			if (RNG(0, 1) == 1)
+			if (RNG(1, 2) == 1)
 			{
 				x = RNG(-20, 20);
 				y = RNG(-20, 20);
-				if (RNG(0, 1) == 1) return [`${z(x)} × ${z(y)}`, x*y]
+				if (RNG(1, 2) == 1) return [`${z(x)} × ${z(y)}`, x*y]
 				return [`${z(x * y)} ÷ ${z(y)}`, x]
 			}
 			x = RNG(-50, 50)
 			y = RNG(-50, 50)
-			if (RNG(0, 1) == 1) return [`${z(x)} + ${z(y)}`, x + y];
+			if (RNG(1, 2) == 1) return [`${z(x)} + ${z(y)}`, x + y];
 			return [`${z(x + y)} - ${z(y)}`, x];
 
 		case 3.4:
-			if (RNG(0, 1) == 1)
+			if (RNG(1, 2) == 1)
 			{
 				x = RNG(-20, 20);
 				y = RNG(-20, 20);
-				if (RNG(0, 1) == 1) return [`${z(x)} × ${z(y)}`, x*y]
+				if (RNG(1, 2) == 1) return [`${z(x)} × ${z(y)}`, x*y]
 				return [`${z(x * y)} ÷ ${z(y)}`, x]
 			}
 			x = RNG(-100, 100)
 			y = RNG(-100, 100)
-			if (RNG(0, 1) == 1) return [`${z(x)} + ${z(y)}`, x + y];
+			if (RNG(1, 2) == 1) return [`${z(x)} + ${z(y)}`, x + y];
 			return [`${z(x + y)} - ${z(y)}`, x];
 
 		case 4.1:
 			x = RNG(2, 10)
-			if (RNG(0, 1) == 1) return [`${x}^2`, x**2]
+			if (RNG(1, 2) == 1) return [`${x}^2`, x**2]
 			return [`square root of ${x**2}`, x]
 
 		case 4.2:
-			if (RNG(0, 1) == 1)
+			if (RNG(1, 2) == 1)
 			{
 				x = RNG(2, 15)
-				if (RNG(0, 1) == 1) return [`${x}^2`, x**2]
+				if (RNG(1, 2) == 1) return [`${x}^2`, x**2]
 				return [`square root of ${x**2}`, x]
 			}
 			x = RNG(2, 10)
-			if (RNG(0, 1) == 1) return [`${x}^3`, x**3]
+			if (RNG(1, 2) == 1) return [`${x}^3`, x**3]
 			return [`cube root of ${x**3}`, x]
 
 		case 4.3:
-			if (RNG(0, 1) == 1)
+			if (RNG(1, 2) == 1)
 			{
 				x = RNG(2, 20)
-				if (RNG(0, 1) == 1) return [`${x}^2`, x**2]
+				if (RNG(1, 2) == 1) return [`${x}^2`, x**2]
 				return [`square root of ${x**2}`, x]
 			}
 			x = RNG(2, 15)
-			if (RNG(0, 1) == 1) return [`${x}^3`, x**3]
+			if (RNG(1, 2) == 1) return [`${x}^3`, x**3]
 			return [`cube root of ${x**3}`, x]
 
 		case 4.4:
@@ -435,23 +498,23 @@ function generate_question(skill)
 			if (n == 1)
 			{
 				x = RNG(2, 8);
-				if (RNG(1, 1) == 1) return [`2^${x}`, 2**x]
+				if (RNG(1, 2) == 1) return [`2^${x}`, 2**x]
 				return [`${roots[x]} root of ${2**x}`, 2]
 			}
 			if (n == 2)
 			{
 				x = RNG(2, 4);
-				if (RNG(1, 1) == 1) return [`3^${x}`, 3**x]
+				if (RNG(1, 2) == 1) return [`3^${x}`, 3**x]
 				return [`${roots[x]} root of ${3**x}`, 3]
 			}
 			if (n == 3)
 			{
 				x = RNG(4, 20);
-				if (RNG(1, 1) == 1) return [`${x}^2`, x**2]
+				if (RNG(1, 2) == 1) return [`${x}^2`, x**2]
 				return [`square root of ${x**2}`, x]
 			}
 			x = RNG(4, 20);
-			if (RNG(1, 1) == 1) return [`${x}^3`, x**3]
+			if (RNG(1, 2) == 1) return [`${x}^3`, x**3]
 			return [`cube root of ${x**3}`, x]
 
 
@@ -461,19 +524,19 @@ function generate_question(skill)
 			{
 				x = RNG(-35, 35)
 				y = RNG(-35, 35)
-				if (RNG(0, 1) == 1) return [`${z(x)} + ${z(y)}`, x+y]
+				if (RNG(1, 2) == 1) return [`${z(x)} + ${z(y)}`, x+y]
 				return [`${z(x+y)} - ${z(y)}`, x]
 			}
 			if (n == 2)
 			{
 				x = RNG(-15, 15)
 				y = RNG(-15, 15)
-				if (RNG(0, 1) == 1) return [`${z(x)} × ${z(y)}`, x*y]
+				if (RNG(1, 2) == 1) return [`${z(x)} × ${z(y)}`, x*y]
 				return [`${z(x*y)} ÷ ${z(y)}`, x]
 			}
 			x = RNG(2, 20)
 			y = RNG(2, 3)
-			if (RNG(0, 1) == 1) return [`${x}^${y}`, x**y]
+			if (RNG(1, 2) == 1) return [`${x}^${y}`, x**y]
 			return [`${roots[y]} root of ${x**y}`, x]
 
 		case 5.2:
@@ -482,19 +545,19 @@ function generate_question(skill)
 			{
 				x = RNG(-50, 50)
 				y = RNG(-50, 50)
-				if (RNG(0, 1) == 1) return [`${z(x)} + ${z(y)}`, x+y]
+				if (RNG(1, 2) == 1) return [`${z(x)} + ${z(y)}`, x+y]
 				return [`${z(x+y)} - ${z(y)}`, x]
 			}
 			if (n == 2)
 			{
 				x = RNG(-20, 20)
 				y = RNG(-20, 20)
-				if (RNG(0, 1) == 1) return [`${z(x)} × ${z(y)}`, x*y]
+				if (RNG(1, 2) == 1) return [`${z(x)} × ${z(y)}`, x*y]
 				return [`${z(x*y)} ÷ ${z(y)}`, x]
 			}
 			x = RNG(2, 20)
 			y = RNG(2, 3)
-			if (RNG(0, 1) == 1) return [`${x}^${y}`, x**y]
+			if (RNG(1, 2) == 1) return [`${x}^${y}`, x**y]
 			return [`${roots[y]} root of ${x**y}`, x]
 
 		case 5.3:
@@ -503,32 +566,32 @@ function generate_question(skill)
 			{
 				x = RNG(-150, 150)
 				y = RNG(-150, 150)
-				if (RNG(0, 1) == 1) return [`${z(x)} + ${z(y)}`, x+y]
+				if (RNG(1, 2) == 1) return [`${z(x)} + ${z(y)}`, x+y]
 				return [`${z(x+y)} - ${z(y)}`, x]
 			}
 			if (n == 2)
 			{
 				x = RNG(-25, 25)
 				y = RNG(-25, 25)
-				if (RNG(0, 1) == 1) return [`${z(x)} × ${z(y)}`, x*y]
+				if (RNG(1, 2) == 1) return [`${z(x)} × ${z(y)}`, x*y]
 				return [`${z(x*y)} ÷ ${z(y)}`, x]
 			}
 			n = RNG(1, 3)
 			if (n == 1)
 			{
 				x = RNG(2, 10)
-				if (RNG(0, 1) == 1) return [`2^${x}`, 2**x]
+				if (RNG(1, 2) == 1) return [`2^${x}`, 2**x]
 				else return [`${roots[x]} root of ${2**x}`, 2]
 			}
 			if (n == 2)
 			{
 				x = RNG(2, 8)
-				if (RNG(0, 1) == 1) return [`3^${x}`, 3**x]
+				if (RNG(1, 2) == 1) return [`3^${x}`, 3**x]
 				return [`${roots[x]} root of ${3**x}`, 3]
 			}
 			x = RNG(4, 20)
 			y = RNG(2, 3)
-			if (RNG(0, 1) == 1) return [`${x}^${y}`, x**y]
+			if (RNG(1, 2) == 1) return [`${x}^${y}`, x**y]
 			return [`${roots[y]} root of ${x**y}`, x]
 
 		default:
@@ -537,57 +600,57 @@ function generate_question(skill)
 			{
 				x = RNG(-500, 500)
 				y = RNG(-500, 500)
-				if (RNG(0, 1) == 1) return [`${z(x)} + ${z(y)}`, x+y]
+				if (RNG(1, 2) == 1) return [`${z(x)} + ${z(y)}`, x+y]
 				return [`${z(x+y)} - ${z(y)}`, x]
 			}
 			if (n == 2)
 			{
 				x = RNG(-30, 30)
 				y = RNG(-30, 30)
-				if (RNG(0, 1) == 1) return [`${z(x)} × ${z(y)}`, x*y]
+				if (RNG(1, 2) == 1) return [`${z(x)} × ${z(y)}`, x*y]
 				return [`${z(x*y)} ÷ ${z(y)}`, x]
 			}
 			n = RNG(1, 6)
 			if (n == 1)
 			{
 				x = RNG(2, 12)
-				if (RNG(0, 1) == 1) return [`2^${x}`, 2**x]
+				if (RNG(1, 2) == 1) return [`2^${x}`, 2**x]
 				else return [`${roots[x]} root of ${2**x}`, 2]
 			}
 			if (n == 2)
 			{
 				x = RNG(2, 10)
-				if (RNG(0, 1) == 1) return [`3^${x}`, 3**x]
+				if (RNG(1, 2) == 1) return [`3^${x}`, 3**x]
 				return [`${roots[x]} root of ${3**x}`, 3]
 			}
 			if (n == 3)
 			{
 				x = RNG(2, 8)
-				if (RNG(0, 1) == 1) return [`4^${x}`, 4**x]
+				if (RNG(1, 2) == 1) return [`4^${x}`, 4**x]
 				return [`${roots[x]} root of ${4**x}`, 4]
 			}
 			if (n == 4)
 			{
 				x = RNG(2, 6)
-				if (RNG(0, 1) == 1) return [`5^${x}`, 5**x]
+				if (RNG(1, 2) == 1) return [`5^${x}`, 5**x]
 				return [`${roots[x]} root of ${5**x}`, 5]
 			}
 			if (n == 5)
 			{
 				x = RNG(6, 20)
 				y = RNG(2, 4)
-				if (RNG(0, 1) == 1) return [`${x}^${y}`, x**y]
+				if (RNG(1, 2) == 1) return [`${x}^${y}`, x**y]
 				return [`${roots[y]} root of ${x**y}`, x]
 			}
 			if (n == 6)
 			{
 				x = RNG(21, 25)
 				y = RNG(2, 3)
-				if (RNG(0, 1) == 1) return [`${x}^${y}`, x**y]
+				if (RNG(1, 2) == 1) return [`${x}^${y}`, x**y]
 				return [`${roots[y]} root of ${x**y}`, x]
 			}
 			x = RNG(26, 30)
-			if (RNG(0, 1) == 1) return [`${x}^2`, x**2]
+			if (RNG(1, 2) == 1) return [`${x}^2`, x**2]
 			return [`square root of ${x**2}`, x]
 	}
 }

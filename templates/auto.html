@@ -37,6 +37,7 @@
 				<p id="tip" style="justify-self: center; grid-column: 2;"> Press ENTER to submit your answer </p>
 				<input style="display: none;" id="load">
 				{% endif %}
+				<input id="music" type="button" style="grid-column: 1 / 1; justify-self: start;" value="Dark Souls music">
 			</div>
 		</div>
 
@@ -44,6 +45,9 @@
 		<p style="display: none;" class="skill">{{ skill }}</p>
 		<form id="skill_form" style="display: none;" method="post" action="/auto">
 			<input name="skill" id="skill_input">
+			<input name="audio" id="audio_input" value="{{ audio }}">
+			<input name="song" id="song_input" value="{{ song }}">
+			<input name="time" id="time_input" value="{{ time }}">
 		</form>
 		{% endif %}
 		<script src="static/auto.js"></script>
