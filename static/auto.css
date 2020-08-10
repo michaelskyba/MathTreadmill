@@ -1,0 +1,60 @@
+
+a
+{
+	color: #61615A;
+}
+
+#time_bar
+{
+	-webkit-appearance: none;
+	width: 425px;
+	margin-top: 10px;
+	margin-bottom: 50px;
+}
+
+.q
+{
+	display: none;
+}
+
+#answer
+{
+	text-align: center;
+	width: 300px;
+	font-size: 15px;
+}
+
+#page
+{
+	display: grid;
+	grid-template-rows: auto 3fr 2fr;
+	height: calc(100vh - 44px);
+}
+
+#header
+{
+	display: grid;
+	grid-template-columns: 1fr auto;
+}
+
+#account
+{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 10px;
+	place-items: center;
+}
+
+#content
+{
+	display: grid;
+	place-items: center;
+	grid-template-rows: 1fr;
+}
+
+#footer
+{
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	align-items: end;
+}

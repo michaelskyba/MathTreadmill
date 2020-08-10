@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Auto </title>
+		<link href="static/auto.css" rel="stylesheet">
+	</head>
+	<body>
+		<div style="margin: 20px;" id="page">
+			<div id="header">
+				<a style="font-size: 30px;" href="/">MathTreadmill</a>
+				<div id="account">
+					{% if user == "" %}
+					<a href="/signin">Sign in</a>
+					<a href="/register">Register</a>
+					{% else %}
+					<a href="/profile">{{ user }}</a>
+					<a href="/logout">Log out</a>
+					{% endif %}
+				</div>
+			</div>
+			<div id="content">
+				<p class="q" id="status" style="color: green;">{{ status }}</p>
+				<p class="q" id="question" style="font-size: 35px;"></p>
+				<p class="q" id="time_p" style="margin-bottom: 0;"></p>
+				<progress class="q" max="10" value="6" id="time_bar"></progress>
+				<input id="answer" type="text" placeholder="Press here and click Enter to start.">
+			</div>
+			<div id="footer">
+				{% if user == "" %}
+				<p style="grid-column: 2 / 2; justify-self: center;"> Press ENTER to submit your answer </p>
+				<div style="justify-items: end; justify-self: end;">
+					<p style="grid-column: 3 / 3;"> Save code: <span id="save_code"> MS4y </span> </p>
+					<input style="grid-column: 3 / 3;" type="button" id="load" value="Load save">
+				</div>
+				{% else %}
+				<p style="justify-self: center; grid-column: 2;"> Press ENTER to submit your answer </p>
+				<input style="display: none;" id="load">
+				{% endif %}
+			</div>
+		</div>
+
+		{% if user != "" %}
+		<p style="display: none;" class="skill">{{ skill }}</p>
+		<form id="skill_form" style="display: none;" method="post" action="/auto">
+			<input name="skill" id="skill_input">
+		</form>
+		{% endif %}
+		<script src="static/auto.js"></script>
+	</body>
+</html>
+

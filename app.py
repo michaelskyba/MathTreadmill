@@ -159,3 +159,34 @@ def logout():
     # Send them back to the homepage
     return redirect("/")
 
+
+# Let user make their own workout
+@app.route("/custom")
+def custom():
+    return render_template("custom.html", user=get_user())
+
+
+# Give user an automatically generate workout
+@app.route("/auto", methods=["GET", "POST"])
+def auto():
+    if request.method == "GET":
+        if get_user() == "":
+            return render_template("auto.html", user="")
+
+        return render_template("auto.html", user=get_user(), skill=session["skill"])
+
+    else:
+        db.execute("UPDATE users SET autoprogress=:skill WHERE username=:username;",
+                    skill=request.form.get("skill"),
+                    username=session["username"])
+
+        session["skill"] = request.form.get("skill")
+
+        return render_template("auto.html", user=session["username"], skill=session["skill"], status=f"Congratulations, your skill has been raised to {session['skill']}!")
+
+
+
+
+
+
+

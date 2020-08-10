@@ -14,3 +14,4 @@ MathTreadmill uses SQLite, Flask, CS50's python module (for easy communication w
 
 Know issues that I am too lazy to fix:
 - if the user knows a bit of js, they can bypass some things like making their userame >15 chars, etc.
+- if the user knows a bit of js, they can easily cheat in /auto 
