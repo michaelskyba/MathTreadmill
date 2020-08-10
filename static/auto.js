@@ -14,6 +14,7 @@ let status_timer = -100;
 let signed_in;
 
 bar = document.getElementById("time_bar");
+document.getElementById("answer").focus()
 
 document.getElementById("load").onclick = function()
 {
@@ -21,10 +22,11 @@ document.getElementById("load").onclick = function()
 	let code = prompt("Enter your code now:")
 	if (!code == false)
 	{
-		if (!isNaN(atob(code)))
+		if (["1.1", "1.2", "1.3", "1.4", "2.1", "2.2", "2.3", "2.4", "3.1", "3.2", "3.3", "3.4", "4.1", "4.2", "4.3", "4.4", "5.1", "5.2", "5.3", "5.4", "S"].indexOf(atob(code)) != -1)
 		{
 			document.getElementById("save_code").innerHTML = code; 
-			skill = parseFloat(atob(code));
+			if (atob(code) == "S") skill = "S";
+			else skill = parseFloat(atob(code));
 			stats = configure(skill);
 			start_time = stats[0];
 			reset_time = stats[0];
@@ -49,7 +51,13 @@ document.getElementById("load").onclick = function()
 			document.getElementById("question").innerHTML = results[0];
 			document.getElementById("answer").placeholder = results[0];
 		}
-		else alert("That's an invalid code... Are you trying to break the app?")
+		else
+		{
+			alert("That's an invalid code...")
+			alert("Are you trying to break the app?")
+			alert("Trying to cheat?")
+			alert("Either way, you should be ashamed of yourself")
+		}
 	}
 }
 
@@ -77,6 +85,12 @@ if (skill_p.length == 1)
 		started = true;
 		interval = setInterval(main, 10);
 
+		if (skill == "S")
+		{
+			start_time += 5;
+			if (start_time > 45) start_time = 45;
+		}
+		else start_time = reset_time;
 		time_remaining = start_time;
 		bar.value = time_remaining;
 		bar.max = start_time * 100;
@@ -108,7 +122,12 @@ document.onkeydown = function (e)
 			started = true;
 			interval = setInterval(main, 10);
 
-			start_time = reset_time;
+			if (skill == "S")
+			{
+				start_time += 5;
+				if (start_time > 45) start_time = 45;
+			}
+			else start_time = reset_time;
 			time_remaining = start_time;
 			bar.value = time_remaining;
 			bar.max = start_time * 100;
@@ -258,11 +277,8 @@ function configure(skill)
 		case 5.4:
 			return [45, 0.75, 10];
 
-			// case 10:
-			// 10 is special
-			// fail --> seconds += 5
-			// if seconds > 45: seconds = 45
-			// no win condition
+		case "S":
+			return [45, 0.75, -1];
 	}
 }
 
@@ -276,6 +292,7 @@ function generate_question(skill)
 {
 	let x;
 	let y;
+	let n;
 
 	switch(skill)
 	{
