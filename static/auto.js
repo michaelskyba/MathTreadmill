@@ -106,6 +106,7 @@ else
 	signed_in = false;
 	document.getElementById("save_code").innerHTML = btoa("1.1") 
 }
+if (skill != 1.1) document.getElementById("tip").innerHTML = "Submitting an incorrect answer will make you lose time"
 
 document.onkeydown = function (e)
 {  
@@ -168,6 +169,8 @@ document.onkeydown = function (e)
 						status_timer = 1000;
 						document.getElementById("save_code").innerHTML = btoa(skill.toString());
 					}
+
+					if (skill != 1.1) document.getElementById("tip").innerHTML = "Submitting an incorrect answer will make you lose time"
 				}
 
 				if (make)
@@ -180,6 +183,10 @@ document.onkeydown = function (e)
 					document.getElementById("question").innerHTML = results[0];
 					document.getElementById("answer").placeholder = results[0];
 				}
+			}
+			else
+			{
+				time_remaining = time_remaining / 2;
 			}
 			document.getElementById("answer").value = "";
 		}
