@@ -246,7 +246,7 @@ document.onkeydown = function (e)
 					document.getElementById("answer").placeholder = results[0];
 				}
 			}
-			else
+			else if (document.getElementById("answer").value != "")
 			{
 				time_remaining = time_remaining / 2;
 			}
