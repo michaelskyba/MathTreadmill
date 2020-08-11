@@ -154,7 +154,7 @@ else
 	signed_in = false;
 	document.getElementById("save_code").innerHTML = btoa("1.1") 
 }
-if (skill != 1.1) document.getElementById("tip").innerHTML = "Submitting an incorrect answer will make you lose time"
+if (skill != 1.1 && skill != 2.2) document.getElementById("tip").innerHTML = "Submitting an incorrect answer will make you lose time"
 
 document.onkeydown = function (e)
 {  
@@ -232,7 +232,7 @@ document.onkeydown = function (e)
 						document.getElementById("save_code").innerHTML = btoa(skill.toString());
 					}
 
-					if (skill != 1.1) document.getElementById("tip").innerHTML = "Submitting an incorrect answer will make you lose time"
+					if (skill != 1.2) document.getElementById("tip").innerHTML = "Submitting an incorrect answer will make you lose time"
 				}
 
 				if (make)

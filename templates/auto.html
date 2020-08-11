@@ -49,6 +49,8 @@
 			<input name="song" id="song_input" value="{{ song }}">
 			<input name="time" id="time_input" value="{{ time }}">
 		</form>
+		{% else %}
+		<input id="audio_input">
 		{% endif %}
 		<script src="static/auto.js"></script>
 	</body>
