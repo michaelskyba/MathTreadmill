@@ -9,6 +9,7 @@ a
 	display: grid;
 	grid-template-rows: auto 1fr 15px 2fr;
 	height: calc(100vh - 44px);
+	grid-gap: 25px;
 }
 
 #header
@@ -44,7 +45,6 @@ a
 .game
 {
 	font-size: 35px;
-	text-decoration: none;
 	align-self: end;
 }
 

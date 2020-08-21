@@ -4,26 +4,6 @@ a
 	color: #61615A;
 }
 
-#time_bar
-{
-	-webkit-appearance: none;
-	width: 425px;
-	margin-top: 10px;
-	margin-bottom: 50px;
-}
-
-.q
-{
-	display: none;
-}
-
-#answer
-{
-	text-align: center;
-	width: 300px;
-	font-size: 15px;
-}
-
 #page
 {
 	display: grid;
@@ -45,16 +25,7 @@ a
 	place-items: center;
 }
 
-#content
+#custom_form
 {
-	display: grid;
-	place-items: center;
-	grid-template-rows: 1fr;
-}
-
-#footer
-{
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	align-items: end;
+	background-color: red;
 }

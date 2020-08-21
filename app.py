@@ -56,7 +56,7 @@ def signin():
 
         # If someone who is logged in is trying to break the site by going to /signin, kick them off
         return redirect("/")
-    
+
     # If the user just submitted the sign in form
     query = db.execute("SELECT * FROM users WHERE username=:username;",
             username=request.form.get("username"))
@@ -133,9 +133,9 @@ def profile():
         db.execute("UPDATE users SET username=:new WHERE username=:old;", new=request.form.get("one"), old=session["username"])
         session["username"] = request.form.get("one")
         return render_template("profile.html", username=session["username"], skill=session["skill"])
-    
+
     # The user is trying to change their password
-    
+
     # Make sure user typed in the correct old password
     query = db.execute("SELECT * FROM users WHERE username=:username;", username=session["username"])
     if not check_password_hash(query[0]["hash"], request.form.get("one")):
@@ -163,7 +163,8 @@ def logout():
 # Let user make their own workout
 @app.route("/custom")
 def custom():
-    return render_template("custom.html", user=get_user())
+    # return render_template("customized.html", user=get_user())
+    return render_template("customized.html")
 
 
 # Give user an automatically generate workout
@@ -177,8 +178,8 @@ def auto():
 
     else:
         db.execute("UPDATE users SET autoprogress=:skill WHERE username=:username;",
-                    skill=request.form.get("skill"),
-                    username=session["username"])
+                skill=request.form.get("skill"),
+                username=session["username"])
 
         session["skill"] = request.form.get("skill")
 
@@ -186,9 +187,12 @@ def auto():
         song = song[len(song)-5:len(song)-4]
 
         if request.form.get("audio") == "yes":
-            return render_template("auto.html", user=session["username"], skill=session["skill"], status=f"Congratulations, your skill has been raised to {session['skill']}!", audio="yes", song=song, time=request.form.get("time"))
+            return render_template("auto.html", user=session["username"], skill=session["skill"],
+                    status=f"Congratulations, your skill has been raised to {session['skill']}!",
+                    audio="yes", song=song, time=request.form.get("time"))
 
-        return render_template("auto.html", user=session["username"], skill=session["skill"], status=f"Congratulations, your skill has been raised to {session['skill']}!")
+            return render_template("auto.html", user=session["username"], skill=session["skill"],
+                    status=f"Congratulations, your skill has been raised to {session['skill']}!")
 
 
 

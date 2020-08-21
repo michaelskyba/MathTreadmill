@@ -28,16 +28,16 @@
 			</div>
 			<div id="footer">
 				{% if user == "" %}
-				<p style="grid-column: 2 / 2; justify-self: center;"> Press ENTER to submit your answer </p>
-				<div style="justify-items: end; justify-self: end;">
-					<p style="grid-column: 3 / 3;"> Save code: <span id="save_code"> MS4y </span> </p>
-					<input style="grid-column: 3 / 3;" type="button" id="load" value="Load save">
+				<p style="grid-column: 2; justify-self: center;"> Press ENTER to submit your answer </p>
+				<div style="justify-items: end; display: grid; justify-self: end; grid-column: 3;">
+					<p style="grid-column: 3;"> Save code: <span id="save_code"> MS4y </span> </p>
+					<input style="grid-column: 3;" type="button" id="load" value="Load existing save">
 				</div>
 				{% else %}
 				<p id="tip" style="justify-self: center; grid-column: 2;"> Press ENTER to submit your answer </p>
 				<input style="display: none;" id="load">
 				{% endif %}
-				<input id="music" type="button" style="grid-column: 1 / 1; justify-self: start;" value="Dark Souls music">
+				<input id="music" type="button" style="grid-area: 1 / 1; margin-bottom: 10px; justify-self: start;" value="Dark Souls music">
 			</div>
 		</div>
 
@@ -50,7 +50,7 @@
 			<input name="time" id="time_input" value="{{ time }}">
 		</form>
 		{% else %}
-		<input id="audio_input">
+		<input style="display: none;" id="audio_input">
 		{% endif %}
 		<script src="static/auto.js"></script>
 	</body>
