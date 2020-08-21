@@ -1,3 +1,5 @@
+// question hash function?
+// 
 
 // Yes, this code is an ugly mess
 // This is a small project so I didn't spend time making it clean/efficient
@@ -198,8 +200,7 @@ document.onkeydown = function (e)
 		{
 			if (parseInt(document.getElementById("answer").value) == answer)
 			{
-				start_time -= decrement;;
-				let make = true;
+				start_time -= decrement;
 				if (start_time < condition)
 				{
 					if ([1.4, 2.4, 3.4, 4.4, 5.4].indexOf(skill) != -1) skill += 0.7
@@ -218,7 +219,6 @@ document.onkeydown = function (e)
 							document.getElementById("time_input").value = music.currentTime;
 						}
 						document.getElementById("skill_form").submit();
-						make = false;
 					}
 					else
 					{
@@ -231,26 +231,24 @@ document.onkeydown = function (e)
 						document.getElementById("status").innerHTML = `Congratulations, your skill has been raised to ${skill}!`;
 						status_timer = 1000;
 						document.getElementById("save_code").innerHTML = btoa(skill.toString());
+
+						bar.max = start_time * 100;
+						time_remaining = start_time;
+
+						results = generate_question(skill);
+						answer = results[1];
+						document.getElementById("question").innerHTML = results[0];
+						document.getElementById("answer").placeholder = results[0];
 					}
 
 					if (skill != 1.2) document.getElementById("tip").innerHTML = "Submitting an incorrect answer will make you lose time"
-				}
-
-				if (make)
-				{
-					bar.max = start_time * 100;
-					time_remaining = start_time;
-
-					results = generate_question(skill);
-					answer = results[1];
-					document.getElementById("question").innerHTML = results[0];
-					document.getElementById("answer").placeholder = results[0];
 				}
 			}
 			else if (document.getElementById("answer").value != "")
 			{
 				time_remaining = time_remaining / 2;
 			}
+
 			document.getElementById("answer").value = "";
 		}
 
@@ -664,4 +662,3 @@ function RNG(min, max)
 	}
 	return r;
 }
-

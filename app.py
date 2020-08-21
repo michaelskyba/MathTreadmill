@@ -183,8 +183,7 @@ def auto():
 
         session["skill"] = request.form.get("skill")
 
-        song = request.form.get("song")
-        song = song[len(song)-5:len(song)-4]
+        song = request.form.get("song")[len(song)-5:len(song)-4]
 
         if request.form.get("audio") == "yes":
             return render_template("auto.html", user=session["username"], skill=session["skill"],
@@ -193,10 +192,4 @@ def auto():
 
             return render_template("auto.html", user=session["username"], skill=session["skill"],
                     status=f"Congratulations, your skill has been raised to {session['skill']}!")
-
-
-
-
-
-
 
