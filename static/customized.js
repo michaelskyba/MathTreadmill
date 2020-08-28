@@ -52,7 +52,7 @@ function get_question(config)
 {
 	let c_v = {
 		name: "",
-		value: "",
+		value: ""
 	}
 	
 	let questions = [{type: config[0]}]
@@ -65,7 +65,7 @@ function get_question(config)
 			if (c == "=")
 			{
 				questions[questions.length-1][c_v.name] = "";
-				i += 2;
+				i++;
 				c_v.value += config[i];
 			}
 			else c_v.name += c;
@@ -94,13 +94,9 @@ function get_question(config)
 			else c_v.value += c;
 		}
 	}
-	
-	/*
-	"M,m1=-14,M1=14,m2=-14,M2=14|D,m1=-14,M1=14,m2=-14,M2=14||R=25|D=0.75|"
-	*/
 
 	// Gets a random question from the array of questions
-	let question = questions[RNG(0, questions.length - 1)];
+	let question = questions[RNG(1, questions.length) - 1];
 
 	// Generates the question using the settings of the chosen question
 	switch(question.type)
@@ -137,8 +133,8 @@ function get_question(config)
 			x = RNG(parseInt(question.m1), parseInt(question.M1));
 			y = RNG(parseInt(question.m2), parseInt(question.M2));
 
-			if (RNG(1, 2) == 2) return[`${z(x)} × ${z(y)}`, x + y];
-			else return[`${z(y)} × ${z(x)}`, x + y];
+			if (RNG(1, 2) == 2) return[`${z(x)} × ${z(y)}`, x * y];
+			else return[`${z(y)} × ${z(x)}`, x * y];
 
 		// Division
 		case "D":
@@ -163,11 +159,55 @@ function get_question(config)
 			return [`what is the ${roots[x]} root of ${z(y**x)}`, y];
 	}
 }
+// get_question("M,m1=-14,M1=14,m2=-14,M2=14|D,m1=-14,M1=14,m2=-14,M2=14||R=25|D=0.75|")
 
 // Takes a preset configuration and outputs the configuration in a digestible form
 // needs to return [<reset_time>, <decrement>]
 function get_config(config)
 {
+	let c_v = {
+		name: "",
+		value: "",
+		phase: 1
+	}
+	
+	let settings = {}
+
+	for (let i = 2; i < config.length; i++)
+	{
+		let c = config[i]
+		if (c == "|" && config[i + 1] == "|")
+		{
+			c_v.phase = 2;
+			i++;
+		}
+		else if (c_v.phase == 2)
+		{
+
+			if (c_v.value == "")
+			{
+				if (c == "=")
+				{
+					settings[c_v.name] = "";
+					i++;
+					c_v.value += config[i];
+				}
+				else c_v.name += c;
+			}
+			else
+			{
+				if (c == "|")
+				{
+					settings[c_v.name] = c_v.value;
+					c_v.name = "";
+					c_v.value = "";
+				}
+				else c_v.value += c;
+			}
+		}
+	}
+
+	return settings;
 }
 
 let roots = [0, "square", "cube", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth"]
