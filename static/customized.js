@@ -1,10 +1,174 @@
-// question hash function?
-// 
 
-// Yes, this code is an ugly mess
-// This is a small project so I didn't spend time making it clean/efficient
-// As you can see, there aren't even any comments
-// If this was a larger project, the code would be much more readable
+
+/*
+	Yes, this code is an ugly mess
+	This is a small project so I didn't spend time making it clean/efficient
+	As you can see, there aren't even any comments
+	If this was a larger project, the code would be much more readable
+*/
+
+/*
+	preset config syntax ("questions" text):
+	<question1>|<question2>|...||<setting1>|<setting2>|...|
+	
+	example config (one that can be used to recreate level 2.3):
+	"M,m1=-14,M1=14,m2=-14,M2=14|D,m1=-14,M1=14,m2=-14,M2=14||R=25|D=0.75|"
+
+		preset settings:
+			syntax:
+			<setting name>=<value>
+
+		settings:
+			R - reset time (when you run out of time)
+			D - decrement (how many seconds to reduce starting time when you answer a question correctly)
+			both R and D do not have to be integers
+
+	question syntax:
+	<question type>,<setting1>,<setting2>,...
+
+		general question settings:
+			m1 - min1 (minimum number when doing RNG)
+			M1 - max1 (maximum number when doing RNG)
+			m2 - min2
+			M2 - max2
+			there are two because you should be able to make questions like "{RNG(1, 20)}^{RNG(2, 4)}" instead of just "{RNG(1, 5)}^{RNG(1, 5)}"
+			all of these min/max values have to be integers
+			for division, you need to type in the minmax values as if it was a multiplication question, since the answer always has to be an integer
+
+		question types:
+		A - addition
+		S - subtraction
+			N - allow negatives (y/n)
+				if no, questions like 4-5 shouldn't be generated)
+		M - multiplication
+		D - division
+		E - exponents
+		R - roots
+*/
+
+// Takes a preset configuration and outputs a question
+// (of the form "[<question (eg "10 + 5")>, <answer (eg 15)>]")
+function get_question(config)
+{
+	let c_v = {
+		name: "",
+		value: "",
+	}
+	
+	let questions = [{type: config[0]}]
+
+	for (let i = 2; i < config.length; i++)
+	{
+		let c = config[i]
+		if (c_v.value == "")
+		{
+			if (c == "=")
+			{
+				questions[questions.length-1][c_v.name] = "";
+				i += 2;
+				c_v.value += config[i];
+			}
+			else c_v.name += c;
+		}
+		else
+		{
+			if (c == ",")
+			{
+				questions[questions.length-1][c_v.name] = c_v.value;
+				c_v.name = "";
+				c_v.value = "";
+			}
+			else if (c == "|")
+			{
+				questions[questions.length-1][c_v.name] = c_v.value;
+				c_v.name = "";
+				c_v.value = "";
+
+				if (config[i + 1] == "|") i = config.length;
+				else
+				{
+					questions.push({type: config[i + 1]});
+					i += 2;
+				}
+			}
+			else c_v.value += c;
+		}
+	}
+	
+	/*
+	"M,m1=-14,M1=14,m2=-14,M2=14|D,m1=-14,M1=14,m2=-14,M2=14||R=25|D=0.75|"
+	*/
+
+	// Gets a random question from the array of questions
+	let question = questions[RNG(0, questions.length - 1)];
+
+	// Generates the question using the settings of the chosen question
+	switch(question.type)
+	{
+		// Addition
+		case "A":
+			x = RNG(parseInt(question.m1), parseInt(question.M1));
+			y = RNG(parseInt(question.m2), parseInt(question.M2));
+
+			if (RNG(1, 2) == 2) return[`${z(x)} + ${z(y)}`, x + y];
+			else return[`${z(y)} + ${z(x)}`, x + y];
+
+		// Subtraction
+		case "S":
+			if (question.N == "y")
+			{
+				x = RNG(parseInt(question.m1), parseInt(question.M1));
+				y = RNG(parseInt(question.m2), parseInt(question.M2));
+
+				if (RNG(1, 2) == 2) return[`${z(x)} - ${z(y)}`, x - y];
+				else return[`${z(y)} - ${z(x)}`, y - x];
+			}
+			else
+			{
+				x = RNG(parseInt(question.m1), parseInt(question.M1));
+				y = RNG(parseInt(question.m2), parseInt(question.M2));
+
+				if (RNG(1, 2) == 2) return[`${z(x + y)} - ${z(y)}`, x];
+				else return[`${z(x + y)} - ${z(x)}`, y];
+			}
+
+		// Multiplication
+		case "M":
+			x = RNG(parseInt(question.m1), parseInt(question.M1));
+			y = RNG(parseInt(question.m2), parseInt(question.M2));
+
+			if (RNG(1, 2) == 2) return[`${z(x)} × ${z(y)}`, x + y];
+			else return[`${z(y)} × ${z(x)}`, x + y];
+
+		// Division
+		case "D":
+			x = RNG(parseInt(question.m1), parseInt(question.M1));
+			y = RNG(parseInt(question.m2), parseInt(question.M2));
+
+			if (RNG(1, 2) == 2) return[`${z(x*y)} ÷ ${z(y)}`, x];
+			else return[`${z(y*x)} ÷ ${z(x)}`, y];
+
+		// Exponents
+		case "E":
+			x = RNG(parseInt(question.m1), parseInt(question.M1));
+			y = RNG(parseInt(question.m2), parseInt(question.M2));
+
+			return [`${z(x)}^${y}`, x**y];
+
+		// Roots
+		case "R":
+			x = RNG(parseInt(question.m1), parseInt(question.M1));
+			y = RNG(parseInt(question.m2), parseInt(question.M2));
+
+			return [`what is the ${roots[x]} root of ${z(y**x)}`, y];
+	}
+}
+
+// Takes a preset configuration and outputs the configuration in a digestible form
+// needs to return [<reset_time>, <decrement>]
+function get_config(config)
+{
+}
 
 let roots = [0, "square", "cube", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth"]
 

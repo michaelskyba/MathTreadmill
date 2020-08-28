@@ -87,6 +87,8 @@ def register():
         # If someone who is logged in is trying to break the site by going to /register, kick them off
         return redirect("/")
 
+    print(request.form['submit_button'])
+
     # If a user just submitted the register form
     query = db.execute("SELECT * FROM users WHERE username=:username;", username=request.form.get("username"))
 

@@ -1,0 +1,33 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+RNG	static/auto.js	/^function RNG(min, max)$/;"	f
+RNG	static/customized.js	/^function RNG(min, max)$/;"	f
+after_request	app.py	/^def after_request(response):$/;"	f
+app	app.py	/^app = Flask(__name__)$/;"	v
+auto	app.py	/^def auto():$/;"	f
+configure	static/auto.js	/^function configure(skill)$/;"	f
+configure	static/customized.js	/^function configure(skill)$/;"	f
+custom	app.py	/^def custom():$/;"	f
+db	app.py	/^db = SQL("sqlite:\/\/\/mt.db")$/;"	v
+document.getElementById	static/auto.js	/^document.getElementById("music").onclick = function()$/;"	f
+document.getElementById	static/customized.js	/^document.getElementById("music").onclick = function()$/;"	f
+document.getElementById	static/profile.js	/^document.getElementById("username").onclick = function()$/;"	f
+document.getElementById	static/register.js	/^document.getElementById("submit_button").onclick = function()$/;"	f
+document.getElementById	static/signin.js	/^document.getElementById("submit_button").onclick = function()$/;"	f
+generate_question	static/auto.js	/^function generate_question(skill)$/;"	f
+generate_question	static/customized.js	/^function generate_question(skill)$/;"	f
+get_question	static/customized.js	/^function get_question(config)$/;"	f
+get_user	app.py	/^def get_user():$/;"	f
+index	app.py	/^def index():$/;"	f
+logout	app.py	/^def logout():$/;"	f
+main	static/auto.js	/^function main()$/;"	f
+main	static/customized.js	/^function main()$/;"	f
+profile	app.py	/^def profile():$/;"	f
+register	app.py	/^def register():$/;"	f
+signin	app.py	/^def signin():$/;"	f
+z	static/auto.js	/^function z(number)$/;"	f
+z	static/customized.js	/^function z(number)$/;"	f
