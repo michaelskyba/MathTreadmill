@@ -3,23 +3,50 @@
 	<head>
 		<title>Custom</title>
 		<link rel="stylesheet" href="static/custom.css">
+		<link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
 	</head>
 	<body>
 		<div id="page" style="margin: 20px;">
 			<div id="header">
-				<a style="font-size: 30px;" href="/"></a>
+				<a style="font-size: 30px;" href="/">MathTreadmill</a>
 				<div id="account">
 					{% if user == "" %}
 					<a href="/signin">Sign in</a>
-					<a href="/register">Resgier</a>
+					<a href="/register">Register</a>
 
 					{% else %}
 					<a href="/profile">{{ user }}</a>
 					<a href="logout">Log out</a>
 					{% endif %}
 				</div>
+			</div>
+			<div id="content">
 				<form id="custom_form" action="/custom" method="post">
-					<p>Questions</p>
+					<div id="dropdown_container">
+						<p style="justify-self: end;">Preset</p>
+						{% if user == "" %}
+						<select id="preset_dropdown" disabled>
+							<option>Sign in to save presets!</option>
+						</select>
+
+						{% else %}
+						<select id="preset_dropdown" name="">
+							<option value="" selected disabled>Select a preset...</option>
+							{% for preset in presets %}
+							<option value="{{ preset['preset_name'] }}">{{ preset["preset_name"] }}</option>
+							{% endfor %}
+							<option id="np" value="New preset">New preset</option>
+						</select>
+						{% endif %}
+					</div>
+
+					<div style="display: grid; grid-template-rows: auto 1fr; justify-content: center;">
+						<p style="font-size: 24px; font-weight: bold;">Questions</p>
+						<div id="questions">
+							<input type="button" id="add_question" value="+">
+						</div>
+					</div>
+					<input type="submit" id="start" value="Start" disabled>
 				</form>
 			</div>
 		</div>

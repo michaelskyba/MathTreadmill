@@ -72,6 +72,9 @@ def signin():
     session["username"] = request.form.get("username")
     session["skill"] = query[0]["autoprogress"]
 
+    # Gets user_id of user
+    session["user_id"] = db.execute("SELECT * FROM users WHERE username=:username;", username=session["username"])[0]["id"]
+
     # Redirects them to the homepage
     return redirect("/")
 
@@ -86,8 +89,6 @@ def register():
 
         # If someone who is logged in is trying to break the site by going to /register, kick them off
         return redirect("/")
-
-    print(request.form['submit_button'])
 
     # If a user just submitted the register form
     query = db.execute("SELECT * FROM users WHERE username=:username;", username=request.form.get("username"))
@@ -104,6 +105,9 @@ def register():
     db.execute('INSERT INTO users (username, hash, autoprogress) VALUES(:username, :password_hash, "1.1");',
                 username=session["username"],
                 password_hash=generate_password_hash(request.form.get("password"), "pbkdf2:sha256", 8))
+
+    # Gets user_id of newly created user
+    session["user_id"] = db.execute("SELECT * FROM users WHERE username=:username;", username=session["username"])[0]["id"]
 
     # Redirects them to the homepage
     return redirect("/")
@@ -165,8 +169,15 @@ def logout():
 # Let user make their own workout
 @app.route("/custom")
 def custom():
-    # return render_template("customized.html", user=get_user())
-    return render_template("customized.html")
+
+    # Sees if user is signed in
+    user = get_user()
+    
+    if user == "":
+        return render_template("custom.html", user=get_user())
+
+    presets = db.execute("SELECT questions, preset_name FROM presets WHERE userid=:user_id;", user_id=session["user_id"]);
+    return render_template("custom.html", user=user, presets=presets);
 
 
 # Give user an automatically generate workout

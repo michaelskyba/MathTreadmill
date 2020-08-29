@@ -1,3 +1,7 @@
+body
+{
+	font-family: 'Ubuntu', sans-serif;
+}
 
 a
 {
@@ -25,7 +29,43 @@ a
 	place-items: center;
 }
 
+#content
+{
+	display: grid;
+	grid-template-columns: 1fr 2fr 1fr;
+}
+
+#preset_dropdown
+{
+	height: 30px;
+	width: 220px;
+}
+
+#dropdown_container
+{
+	display: grid;
+	grid-template-columns: 3fr 5fr;
+	align-items: center;
+	grid-gap: 20px;
+}
+
 #custom_form
 {
-	background-color: red;
+	grid-column: 2;
+	background-color: rgba(255, 0, 0, 0.5);
+	display: grid;
+	grid-template-rows: auto 1fr auto;
 }
+
+#questions
+{
+	display: grid;
+	background-color: rgba(0, 255, 0, 0.5);
+}
+
+#add_question
+{
+	justify-self: center;
+	align-self: end;
+}
+
