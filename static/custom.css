@@ -11,7 +11,7 @@ a
 #page
 {
 	display: grid;
-	grid-template-rows: auto 3fr 2fr;
+	grid-template-rows: auto 1fr 10fr 1fr;
 	height: calc(100vh - 44px);
 }
 
@@ -33,6 +33,7 @@ a
 {
 	display: grid;
 	grid-template-columns: 1fr 2fr 1fr;
+	grid-row: 3;
 }
 
 #preset_dropdown
@@ -52,15 +53,25 @@ a
 #custom_form
 {
 	grid-column: 2;
-	background-color: rgba(255, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.025);
 	display: grid;
 	grid-template-rows: auto 1fr auto;
+	grid-gap: 20px;
+	border: 2px solid;
 }
 
 #questions
 {
 	display: grid;
-	background-color: rgba(0, 255, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.05);
+	border: 2px solid black;
+}
+
+#start
+{
+	margin-bottom: 8px;
+	width: 100px;
+	justify-self: center;
 }
 
 #add_question

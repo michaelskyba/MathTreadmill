@@ -33,17 +33,18 @@
 						<select id="preset_dropdown" name="">
 							<option value="" selected disabled>Select a preset...</option>
 							{% for preset in presets %}
-							<option value="{{ preset['preset_name'] }}">{{ preset["preset_name"] }}</option>
+							<option value="{{ preset['questions'] }}">{{ preset["preset_name"] }}</option>
 							{% endfor %}
 							<option id="np" value="New preset">New preset</option>
 						</select>
 						{% endif %}
 					</div>
 
-					<div style="display: grid; grid-template-rows: auto 1fr; justify-content: center;">
-						<p style="font-size: 24px; font-weight: bold;">Questions</p>
+					<div style="display: grid; grid-template-rows: auto 1fr; justify-items: center;">
+						<p style="margin-top: 0; margin-bottom: 20px; font-size: 24px; font-weight: bold;">Questions</p>
 						<div id="questions">
-							<input type="button" id="add_question" value="+">
+							<p style="padding: 10px;" id="no_questions"> You have no question types. Click the + button to add one! </p>
+							<input style="margin-bottom: 10px;" type="button" id="add_question" value="+">
 						</div>
 					</div>
 					<input type="submit" id="start" value="Start" disabled>
