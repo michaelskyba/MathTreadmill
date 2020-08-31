@@ -43,11 +43,20 @@
 					<div style="display: grid; grid-template-rows: auto 1fr; justify-items: center;">
 						<p style="margin-top: 0; margin-bottom: 20px; font-size: 24px; font-weight: bold;">Questions</p>
 						<div id="questions">
-							<p style="padding: 10px;" id="no_questions"> You have no question types. Click the + button to add one! </p>
-							<input style="margin-bottom: 10px;" type="button" id="add_question" value="+">
+							<p style="padding: 10px;" id="no_questions"> You have no questions, so click the + button to add one. </p>
 						</div>
 					</div>
-					<input type="submit" id="start" value="Start" disabled>
+					<input style="margin-bottom: 10px;" type="button" id="add_question" value="+">
+					<div style="display: grid; grid-template-columns: auto 1fr;">
+						<div style="display: grid; grid-template-columns: auto auto;">
+							<input type="text" id="decrement" placeholder="Dec (secs)">
+							<input type="text" id="reset_time" placeholder="Time (secs)">
+						</div>
+						<div style="justify-self: end; display: grid; grid-template-columns: auto auto;">
+							<input type="submit" id="start" value="Start" disabled>
+							<input type="button" id="help" value="?" style='margin: 8px; width: 90px;'>
+						</div>
+					</div>
 				</form>
 			</div>
 		</div>

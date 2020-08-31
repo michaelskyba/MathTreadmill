@@ -14,20 +14,33 @@ configure	static/customized.js	/^function configure(skill)$/;"	f
 custom	app.py	/^def custom():$/;"	f
 db	app.py	/^db = SQL("sqlite:\/\/\/mt.db")$/;"	v
 document.getElementById	static/auto.js	/^document.getElementById("music").onclick = function()$/;"	f
+document.getElementById	static/custom.js	/^document.getElementById("preset_dropdown").onchange = function()$/;"	f
 document.getElementById	static/customized.js	/^document.getElementById("music").onclick = function()$/;"	f
 document.getElementById	static/profile.js	/^document.getElementById("username").onclick = function()$/;"	f
 document.getElementById	static/register.js	/^document.getElementById("submit_button").onclick = function()$/;"	f
 document.getElementById	static/signin.js	/^document.getElementById("submit_button").onclick = function()$/;"	f
 generate_question	static/auto.js	/^function generate_question(skill)$/;"	f
+generate_question	static/custom.js	/^function generate_question(questions)$/;"	f
 generate_question	static/customized.js	/^function generate_question(skill)$/;"	f
+get_config	static/custom.js	/^function get_config(config)$/;"	f
+get_config	static/customized.js	/^function get_config(config)$/;"	f
 get_question	static/customized.js	/^function get_question(config)$/;"	f
+get_questions	static/custom.js	/^function get_questions(config)$/;"	f
 get_user	app.py	/^def get_user():$/;"	f
 index	app.py	/^def index():$/;"	f
 logout	app.py	/^def logout():$/;"	f
 main	static/auto.js	/^function main()$/;"	f
 main	static/customized.js	/^function main()$/;"	f
+name	static/custom.js	/^		name: "",$/;"	p	class:let
+name	static/customized.js	/^		name: "",$/;"	p	class:let
+phase	static/custom.js	/^		phase: 1$/;"	p	class:let
+phase	static/customized.js	/^		phase: 1$/;"	p	class:let
 profile	app.py	/^def profile():$/;"	f
 register	app.py	/^def register():$/;"	f
 signin	app.py	/^def signin():$/;"	f
+value	static/custom.js	/^		value: ""$/;"	p	class:let
+value	static/custom.js	/^		value: "",$/;"	p	class:let
+value	static/customized.js	/^		value: ""$/;"	p	class:let
+value	static/customized.js	/^		value: "",$/;"	p	class:let
 z	static/auto.js	/^function z(number)$/;"	f
 z	static/customized.js	/^function z(number)$/;"	f

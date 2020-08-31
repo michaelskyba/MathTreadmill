@@ -1,3 +1,11 @@
+// Help page
+document.getElementById("help").onclick = function()
+{
+	window.location.href = "./static/help.txt";
+}
+
+// Easy to add the no questions text if we delete it
+let no_questions_button = document.getElementById("no_questions");
 
 // When the user switches the active preset
 document.getElementById("preset_dropdown").onchange = function()
@@ -30,12 +38,8 @@ document.getElementById("preset_dropdown").onchange = function()
 		// Remove "no questions" text if it is false
 		if (questions.length != 0)
 		{
-			document.getElementById("no_questions").remove();
+			no_questions_button.remove();
 		}
-
-		// Temporarily removes the + button to make it easier to generate questions
-		let plus = document.getElementById("add_button");
-		plus.remove();
 
 		// Iterates over questions and generates HTML
 		for (let i = 0; i < questions.length; i++)
@@ -44,15 +48,74 @@ document.getElementById("preset_dropdown").onchange = function()
 			question.style = "margin: 10px; padding: 10px; border: 1px solid;";
 			
 			let p = document.createElement("p");
-			p.innerHTML = `Question #${i}`;
+			p.innerHTML = `Question No. ${i}`;
 
 			question.appendChild(p);
 			document.getElementById("questions").appendChild(question);
 		}
-
-		// Adds back the + button
-		document.getElementById("questions").appendChild(plus);
 	}
+}
+
+
+// When you click the + button
+document.getElementById("add_question").onclick = function()
+{
+	// Creates the question element
+	let question = document.createElement("div");
+	question.className = "question";
+	question.style = "background-color: rgba(0, 0, 0, 0.05); display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto 1fr; border: 1px solid;";
+
+	// Gets existing questions, for creating the right question name and removing the "no questions" text
+	let questions = document.getElementsByClassName("question");
+
+	// Question name
+	let p = document.createElement("p");
+	p.innerHTML = `-— Question No. ${questions.length + 1}`;
+	p.style.paddingLeft = "10px";
+	question.appendChild(p);
+
+	if (questions.length == 0)
+	{
+		// Removes "no questions" text, since you added a question, thus making the amount of qusetions > 0
+		no_questions_button.remove();
+		question.style.marginTop = "10px";
+	}
+
+	// Adds question type dropdown (Addition, multiplication, exponents, etc.)
+	//  wrapper
+	let div = document.createElement("div");
+	div.style = "display: grid; grid-template-columns: 1fr auto; grid-gap: 10px; align-items: center;";
+	question.appendChild(div);
+
+	// "Type:" text
+	p = document.createElement("p");
+	p.innerHTML = "Type:";
+	p.style = "grid-column: 1; justify-self: end;";
+	// div.appendChild(p);
+
+	// Actual dropdown
+	let dropdown = document.createElement("select");
+	dropdown.style = "margin-right: 10px; place-self: center; grid-column: 2;";
+	
+	// Adds options
+	let option = document.createElement("option");
+	option.innerHTML = "Select a type...";
+	option.value = "";
+	option.selected = true;
+	option.disabled = true;
+	dropdown.appendChild(option);
+	let types = ["Addition", "Subtraction", "Multiplication", "Division", "Exponents", "Roots"]
+	for (let i = 0; i < 6; i++)
+	{
+		option = document.createElement("option");
+		option.innerHTML = types[i];
+		option.value = types[i];
+		dropdown.appendChild(option);
+	}
+	div.appendChild(dropdown);
+
+	// Finally adds the question into the page
+	document.getElementById("questions").appendChild(question);
 }
 
 

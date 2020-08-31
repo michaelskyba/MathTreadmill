@@ -53,7 +53,6 @@ a
 #custom_form
 {
 	grid-column: 2;
-	background-color: rgba(0, 0, 0, 0.025);
 	display: grid;
 	grid-template-rows: auto 1fr auto;
 	grid-gap: 20px;
@@ -63,20 +62,40 @@ a
 #questions
 {
 	display: grid;
-	background-color: rgba(0, 0, 0, 0.05);
+	background-color: rgba(0, 0, 0, 0.025);
 	border: 2px solid black;
+	max-height: 300px;
+	overflow: auto;
+	width: 430px;
+	justify-items: stretch;
+	grid-gap: 15px;
+	padding: 10px;
+}
+
+#questions::after {
+	content: "";
+	display: block;
+	height: 0.01px;
+	width: 100%;
 }
 
 #start
 {
-	margin-bottom: 8px;
+	margin: 8px;
 	width: 100px;
-	justify-self: center;
+	justify-self: end;
 }
 
 #add_question
 {
 	justify-self: center;
 	align-self: end;
+}
+
+#decrement, #reset_time
+{
+	text-align: center;
+	margin: 8px;
+	width: 75px;
 }
 

@@ -1,0 +1,119 @@
+
+This is the help menu for the "Custom" page of MathTreadmill ("/custom").
+
+You can read this if you do not understand how to use /custom
+(if you are an average user who is seeing the custom page for the first time, this will likely be the case).
+
+It is helpful to have a tab open of this help page, as well as a tab open of the /custom page on MathTreadmill.
+To do this, duplicate the current tab (right-click the current tab and select "Duplicate")
+and then go backwards in history (on Firefox and Chrome, you can do Alt + left arrow)
+
+Presets
+	A preset is basically just a collection of questions.
+	For example, you might have a preset specifically for practicing doing 1x1 to 20x20 multiplication in less than 10 seconds,
+	and a different preset for doing 4 digit addition in under 20 seconds.
+
+Questions
+	In /custom, you can create different questions. Note that you create templates of questions, not individual computations.
+	For example, you might tell /custom "Give me multiplication questions from 10x10 to 30x50"
+	(but you wouldn't actually input every single question combination).
+	When practicing the current preset, you will be shown random questions from your list.
+	So, if you had one question for addition (1 + 1 to 100 + 100), and another question for powers of two (2^2 to 2^15),
+	you will see addition questions 50% of the time, and exponent questions the other 50%
+
+	Question settings
+		Type
+			This setting is pretty self explanatory
+			Choose "Addition" if you want to practice addition, etc.
+
+		Min1, Max1, Min2, Max2
+			Used to decide which values your questions will have when practicing
+			Here is how questions are generated (RNG(min, max)):
+
+			Addition:
+			x = RNG(Min1, Max1)
+			y = RNG(Min2, Max2)
+			question: "What is x + y?" or "What is y + x"?
+			answer: x + y
+
+			Multiplication:
+			x = RNG(Min1, Max1)
+			y = RNG(Min2, Max2)
+			question: "What is x × y?" or "What is y × x?"
+			answer: x * y
+
+			Division:
+			x = RNG(Min1, Max1)
+			y = RNG(Min2, Max2)
+			question: "What is (x*y) ÷ y?" or "What is (x*y) ÷ x?"
+			answer: y or y, respectively
+			this one is kind of weird (to avoid having non-integer answers)
+
+			Exponents:
+			x = RNG(Min1, Max1)
+			y = RNG(Min2, Max2)
+			question: "What is x ^ y?"
+			answer: x**y (no "or"s, obviously)
+
+			Roots:
+			x = RNG(Min1, Max1)
+			y = RNG(Min2, Max2)
+			question: "What is yth root of (x**y)?"
+			answer: x
+
+			Subtraction:
+			this one is a bit different, which is why I showed it last
+			there is an extra option for Subtraction: AN ("Allow negatives?")
+			if set to yes, questions like 5 - 7 where y > x are valid
+			if set to no, questions like 5 - 7 will not be generated
+			yes:
+				x = RNG(Min1, Max1)
+				y = RNG(Min2, Max2)
+				question: "What is x - y?"
+				answer: x - y
+			no:
+				x = RNG(Min1, Max1)
+				y = RNG(Min2, Max2)
+				question: "What is (x+y) - y?" or "What is (x+y) - y?"
+				answer: x or y, respectively
+
+Preset Settings
+	Time (Time remaining)
+		the amount of time you initially start with per question
+		this is also the amount of time that will be resetted to if you run out of time on a question
+		
+	Dec (Decrement)
+		The amount of time that is removed from your starting time each time you answer a question correctly
+		so, if your "Time" is set to 20 (seconds), and your "Dec" is set to 0.5 (seconds),
+		you will initially have 20 seconds to answer the first question
+		if you get it right, you will have 19.5 seconds to answer the second question
+
+		let's say you start the training session with these settings and answer 10 questions correctly in a row
+		20 - (0.5 * 10) = 20 - 5 = 15, so you will have 15 seconds to answer the 11th question
+		if you fail that 11th question, your time will be set back to 20, since that is your reset time ("Time")
+
+		etc.
+
+Preset Saving Explained
+	if you make changes to one of your presets, it will only be saved if you "Start" that preset
+	if you make a new preset (by selecting the "New Preset" option when signed in), it will be discarded if you switch back to an existing preset
+	to save your new preset, you again have to "Start" it by clicking the "Start" button
+	starting a preset while you are on the "Select a preset..." option will let you use temporary settings
+	they will be discarded when you close the tab, so make sure to actually create a new preset if you plan on using the same settings in the future
+	when using /custom while not signed in, none of your settings will be saved
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
