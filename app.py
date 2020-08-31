@@ -167,17 +167,31 @@ def logout():
 
 
 # Let user make their own workout
-@app.route("/custom")
+@app.route("/custom", method=["GET", "POST"])
 def custom():
 
     # Sees if user is signed in
     user = get_user()
-    
-    if user == "":
-        return render_template("custom.html", user=get_user())
 
-    presets = db.execute("SELECT questions, preset_name FROM presets WHERE userid=:user_id;", user_id=session["user_id"]);
-    return render_template("custom.html", user=user, presets=presets);
+    if request.method == "GET":
+        # User is not signed in, and is viewing the page normally
+        if user == "":
+            return render_template("custom.html", user="")
+
+        # User is signed in, and is viewing the page normally
+        presets = db.execute("SELECT questions, preset_name FROM presets WHERE userid=:user_id;", user_id=session["user_id"]);
+        return render_template("custom.html", user=user, presets=presets);
+
+    config = ""
+    for i in request.form.get("j_questions"):
+        # e
+
+    if user != "":
+        # User is signed in, so we need to update the SQL database
+        # they have updated one of their presets
+
+    # Serve them the customized page, using the config they made in custom.html
+    return render_template("customized.html", config=config);
 
 
 # Give user an automatically generate workout
