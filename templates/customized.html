@@ -41,12 +41,7 @@
 			</div>
 		</div>
 
-		{% if user != "" %}
-		<p style="display: none;" class="skill">{{ skill }}</p>
-		<form id="skill_form" style="display: none;" method="post" action="/auto">
-			<input name="skill" id="skill_input">
-		</form>
-		{% endif %}
+		<p style="display: none;" id="config">{{ config }}</p>
 		<script src="static/customized.js"></script>
 	</body>
 </html>

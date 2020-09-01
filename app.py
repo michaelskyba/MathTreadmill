@@ -167,7 +167,7 @@ def logout():
 
 
 # Let user make their own workout
-@app.route("/custom", method=["GET", "POST"])
+@app.route("/custom", methods=["GET", "POST"])
 def custom():
 
     # Sees if user is signed in
@@ -182,16 +182,17 @@ def custom():
         presets = db.execute("SELECT questions, preset_name FROM presets WHERE userid=:user_id;", user_id=session["user_id"]);
         return render_template("custom.html", user=user, presets=presets);
 
-    config = ""
-    for i in request.form.get("j_questions"):
-        # e
+    # Get the users question and convert it into a form that customized.js can use
+    print(request.form.get("j_questions"))
 
-    if user != "":
-        # User is signed in, so we need to update the SQL database
-        # they have updated one of their presets
+    if user != "" and request.form.get("preset_dropdown") != "":
+            # User is signed in, so we need to update the SQL database
+            db.execute("UPDATE presets SET questions=:config WHERE preset_name=:preset_name",
+                    config=request.form.get("j_questions"),
+                    preset_name=TODO)
 
-    # Serve them the customized page, using the config they made in custom.html
-    return render_template("customized.html", config=config);
+    # Serve them the new customized.html page using the config they just made in custom.html
+    return render_template("customized.html", config=request.form.get("j_questions"))
 
 
 # Give user an automatically generate workout
@@ -203,20 +204,19 @@ def auto():
 
         return render_template("auto.html", user=get_user(), skill=session["skill"])
 
-    else:
-        db.execute("UPDATE users SET autoprogress=:skill WHERE username=:username;",
-                skill=request.form.get("skill"),
-                username=session["username"])
+    db.execute("UPDATE users SET autoprogress=:skill WHERE username=:username;",
+        skill=request.form.get("skill"),
+        username=session["username"])
 
-        session["skill"] = request.form.get("skill")
+    session["skill"] = request.form.get("skill")
 
-        song = request.form.get("song")[len(song)-5:len(song)-4]
+    song = request.form.get("song")[len(song)-5:len(song)-4]
 
-        if request.form.get("audio") == "yes":
-            return render_template("auto.html", user=session["username"], skill=session["skill"],
-                    status=f"Congratulations, your skill has been raised to {session['skill']}!",
-                    audio="yes", song=song, time=request.form.get("time"))
+    if request.form.get("audio") == "yes":
+        return render_template("auto.html", user=session["username"], skill=session["skill"],
+        status=f"Congratulations, your skill has been raised to {session['skill']}!",
+        audio="yes", song=song, time=request.form.get("time"))
 
-            return render_template("auto.html", user=session["username"], skill=session["skill"],
-                    status=f"Congratulations, your skill has been raised to {session['skill']}!")
+    return render_template("auto.html", user=session["username"], skill=session["skill"],
+        status=f"Congratulations, your skill has been raised to {session['skill']}!")
 

@@ -4,6 +4,9 @@ This is the help menu for the "Custom" page of MathTreadmill ("/custom").
 You can read this if you do not understand how to use /custom
 (if you are an average user who is seeing the custom page for the first time, this will likely be the case).
 
+if you had unsaved changes on the preset you were just editing, they are gone now
+lol
+
 It is helpful to have a tab open of this help page, as well as a tab open of the /custom page on MathTreadmill.
 To do this, duplicate the current tab (right-click the current tab and select "Duplicate")
 and then go backwards in history (on Firefox and Chrome, you can do Alt + left arrow)
@@ -77,6 +80,17 @@ Questions
 				question: "What is (x+y) - y?" or "What is (x+y) - y?"
 				answer: x or y, respectively
 
+Sample Button
+	understanding the min and max options can be confusing, so the Sample buttons lets you see an example of a question
+	that would be generated using your current settings
+
+	if one of your inputs is invalid, it will instead say "Invalid options set"
+	however, it is possible that your inputs are valid and it still shows you the message
+	
+	in this case, you must re-enter your Min1, Max1, Min2, Max3
+	make sure to wait a second after entering each value before clicking off/hitting Tab, though
+	since the values are actually set using the "onkeyup" trigger, clicking off before you technically unpress a key is possible
+
 Preset Settings
 	Time (Time remaining)
 		the amount of time you initially start with per question
@@ -101,24 +115,19 @@ Preset Saving Explained
 	starting a preset while you are on the "Select a preset..." option will let you use temporary settings
 	they will be discarded when you close the tab, so make sure to actually create a new preset if you plan on using the same settings in the future
 	when using /custom while not signed in, none of your settings will be saved
-	
+
+Start Button
+	by default the start button will not let you start, saying "Invalid options set"
+	to fix this, make sure your options are... valid...
+
+	so don't leave any inputs blank, etc.
+
+Delete Button
+	the delete button is used to delete questions and presets
+	click it and follow the instructions if you want to delete a preset or a question
 
 
 
 Also, sorry about the /custom page being generally slow and clunky... If I knew how to fix it, I would
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

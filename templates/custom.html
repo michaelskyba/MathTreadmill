@@ -25,12 +25,12 @@
 					<div id="dropdown_container">
 						<p style="justify-self: end;">Preset</p>
 						{% if user == "" %}
-						<select id="preset_dropdown" disabled>
-							<option>Sign in to save presets!</option>
+						<select name="preset_dropdown" id="preset_dropdown" disabled>
+							<option value="">Sign in to save presets!</option>
 						</select>
 
 						{% else %}
-						<select id="preset_dropdown" name="">
+						<select id="preset_dropdown" name="preset_dropdown">
 							<option value="" selected disabled>Select a preset...</option>
 							{% for preset in presets %}
 							<option value="{{ preset['questions'] }}">{{ preset["preset_name"] }}</option>
@@ -53,11 +53,11 @@
 							<input type="text" id="reset_time" placeholder="Time (secs)">
 						</div>
 						<div style="justify-self: end; display: grid; grid-template-columns: auto auto;">
-							<input type="button" id="start" value="Start" disabled>
+							<input type="button" id="start" value="Start">
 							<input type="button" id="help" value="?" style='margin: 8px; width: 90px;'>
 						</div>
 					</div>
-					<input type="text" style="display: none;" name="j_questions">
+					<input type="text" style="display: none;" name="j_questions" id="j_questions">
 				</form>
 			</div>
 		</div>

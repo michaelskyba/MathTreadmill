@@ -47,6 +47,7 @@
 */
 
 // Takes a preset configuration and outputs a question
+alert(document.getElementById("config").innerHTML);
 // (of the form "[<question (eg "10 + 5")>, <answer (eg 15)>]")
 function get_question(config)
 {

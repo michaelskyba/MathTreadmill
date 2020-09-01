@@ -17,7 +17,26 @@ let no_questions_button = document.getElementById("no_questions");
 // When the user clicks the "Start" button
 document.getElementById("start").onclick = function()
 {
-	document.getElementById("j_questions").value = j_questions;
+	// Transcribe the settings into a string
+	// eg. "M,m1=-14,M1=14,m2=-14,M2=14,N=|D,m1=-14,M1=14,m2=-14,M2=14,N=||R=25|D=0.75|"
+	let config = "";
+
+	// Less typing
+	let jq = j_questions;
+	for (let i = 0; i < jq.length; i++)
+	{
+		config += jq[i].type[0] + ",m1=";
+		config += jq[i].Min1 + ",M1=";
+		config += jq[i].Max1 + ",m2=";
+		config += jq[i].Min2 + ",M2=";
+		config += jq[i].Max2 + ",N=";
+		config += jq[i].an + "|";
+	}
+	config += `|R=${document.getElementById("reset_time").value}|D=${document.getElementById("decrement").value}|`;
+	console.log(config);
+
+	// Submits the config to Python
+	document.getElementById("j_questions").value = config;
 	document.getElementById("custom_form").submit();
 }
 
@@ -36,10 +55,12 @@ document.getElementById("preset_dropdown").onchange = function()
 			alert("Really?");
 			this.value = "";
 		}
-
-		// Updates "New Preset" option
-		document.getElementById("np").value = new_name;
-		document.getElementById("np").innerHTML = new_name;
+		else
+		{
+			// Updates "New Preset" option
+			document.getElementById("np").value = new_name;
+			document.getElementById("np").innerHTML = new_name;
+		}
 	}
 	else
 	{
