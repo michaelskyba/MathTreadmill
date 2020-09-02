@@ -13,5 +13,11 @@ MathTreadmill uses SQLite, Flask, CS50's python module (for easy communication w
 
 
 Know issues that I am too lazy to fix:
-- if the user knows a bit of js, they can bypass some things like making their userame >15 chars, etc.
-- if the user knows a bit of js, they can easily cheat in /auto 
+- A lot of checks are done in the front-end, so if the user knows a bit of js, they can mess things up (make their username > 15 chars, start /custom with invalid options, etc.)
+- The project uses SQLite, which isn't scalable
+- custom.html is very clunky, especially once you start adding multiple questions
+- help.txt is difficult to understand, and /custom without help.txt is even more difficult to understand
+- dark souls music is not copyright-free, so MathTreadmill might get taken down (unlikely)
+- the code is sloppy and not maintainable long-term
+- the commit messages are a mess
+- MathTreadmill is terrible on mobile (please don't use it on mobile)
