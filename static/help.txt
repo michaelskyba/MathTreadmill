@@ -31,6 +31,13 @@ Questions
 
 		Min1, Max1, Min2, Max2
 			Used to decide which values your questions will have when practicing
+
+			!!!! IMPORTANT !!!! do not set your min/max values to zero
+			to avoid division by zero, the RNG() function will keep running until it comes up with a number that isn't zero
+			so, if you make the min and max 0 (forcing it to get 0), there will be an infinite loop and the page will crash
+			to avoid crashing, MathTreadmill will automatically return the number 1 if the program runs RNG(0, 0)
+			that means that your questions will be messed up, giving you 1s instead of 0s
+			
 			Here is how questions are generated (RNG(min, max)):
 
 			Addition:

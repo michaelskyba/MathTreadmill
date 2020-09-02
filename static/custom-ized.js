@@ -214,6 +214,9 @@ function get_config(m_config)
 // Generates random numbers
 function RNG(min, max)
 {
+	// Prevent a page crash if the user enters 0 for the min and max
+	if (Math.round(min) == 0 && Math.round(max) == 0) return 1;
+
 	let r = 0;
 	while (r == 0)
 	{
