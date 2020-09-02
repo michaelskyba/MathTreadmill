@@ -183,17 +183,28 @@ def custom():
         return render_template("custom.html", user=user, presets=presets);
 
     # Get the users question and convert it into a form that customized.js can use
-    print(request.form.get("j_questions"))
+    print(request.form.get("preset_dropdown"))
 
     if user != "" and request.form.get("preset_dropdown") != "":
             # User is signed in, so we need to update the SQL database
-            db.execute("UPDATE presets SET questions=:config WHERE preset_name=:preset_name",
-                    config=request.form.get("j_questions"),
-                    preset_name=TODO,
-                    user=user)
+
+            # Check if that preset already exists
+            if request.form.get("new_preset?") == "Yes":
+                # Create a new preset for them
+                db.execute("INSERT INTO presets (userid, questions, preset_name) VALUES (:userid, :questions, :name);",
+                userid=session["user_id"],
+                questions=request.form.get("j_questions"),
+                name=request.form.get("preset_dropdown"))
+
+            else:
+                # Update their existing preset
+                db.execute("UPDATE presets SET questions=:questions WHERE preset_name=:preset_name AND userid=:userid",
+                questions=request.form.get("j_questions"),
+                preset_name=request.form.get("preset_dropdown"),
+                userid=session["userid"])
 
     # Serve them the new customized.html page using the config they just made in custom.html
-    return render_template("customized.html", user="", config=request.form.get("j_questions"))
+    return render_template("customized.html", user=user, config=request.form.get("j_questions"))
 
 
 # Give user an automatically generate workout
@@ -211,7 +222,8 @@ def auto():
 
     session["skill"] = request.form.get("skill")
 
-    song = request.form.get("song")[len(song)-5:len(song)-4]
+    song = request.form.get("song")
+    song = song[len(song)-5:len(song)-4]
 
     if request.form.get("audio") == "yes":
         return render_template("auto.html", user=session["username"], skill=session["skill"],

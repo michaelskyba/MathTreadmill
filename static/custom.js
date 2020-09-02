@@ -1,5 +1,13 @@
 // Keeps track of the questions made "javscript questions?"
-let j_questions = []
+let j_questions = [];
+
+// Keeps track of user's presets
+let presets = [];
+let preset_elements = document.getElementsByClassName("preset");
+for (let i = 0; i < preset_elements.length; i++)
+{
+	presets.push(preset_elements[i].innerHTML);
+}
 
 // Help page
 document.getElementById("help").onclick = function()
@@ -66,7 +74,7 @@ document.getElementById("preset_dropdown").onchange = function()
 
 		// Check if user properly entered a name
 		if (!new_name) this.value = "";
-		else if (new_name == "New preset")
+		else if (new_name == "New preset" || presets.indexOf(new_name) != -1)
 		{
 			alert("Really?");
 			this.value = "";
@@ -76,6 +84,9 @@ document.getElementById("preset_dropdown").onchange = function()
 			// Updates "New Preset" option
 			document.getElementById("np").value = new_name;
 			document.getElementById("np").innerHTML = new_name;
+
+			// Tells Python later that a new preset was made
+			document.getElementById("new_preset?").value = "Yes";
 		}
 	}
 	else
@@ -83,6 +94,7 @@ document.getElementById("preset_dropdown").onchange = function()
 		// Resets "New Preset" option
 		document.getElementById("np").value = "New preset";
 		document.getElementById("np").innerHTML = "New preset";
+		document.getElementById("new_preset?").value = "No";
 
 		// Gets the questions from the user's preset
 		let questions = get_questions(this.value);
