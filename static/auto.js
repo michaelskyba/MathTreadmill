@@ -240,6 +240,14 @@ document.onkeydown = function (e)
 
 					if (skill != 1.2) document.getElementById("tip").innerHTML = "Submitting an incorrect answer will make you lose time"
 				}
+
+				bar.max = start_time * 100;
+				time_remaining = start_time;
+
+				results = generate_question(skill);
+				answer = results[1];
+				document.getElementById("question").innerHTML = results[0];
+				document.getElementById("answer").placeholder = results[0]
 			}
 			else if (document.getElementById("answer").value != "")
 			{

@@ -1,9 +1,6 @@
 // Keeps track of the questions made "javscript questions?"
 let j_questions = []
 
-// Roots...
-let roots = [0, "square", "cube", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth"]
-
 // Help page
 document.getElementById("help").onclick = function()
 {
@@ -47,10 +44,10 @@ document.getElementById("start").onclick = function()
 			config += jq[i].Max1 + ",m2=";
 			config += jq[i].Min2 + ",M2=";
 			config += jq[i].Max2 + ",N=";
+			if (jq[i].an == "") jq[i].an = " ";
 			config += jq[i].an + "|";
 		}
 		config += `|R=${document.getElementById("reset_time").value}|D=${document.getElementById("decrement").value}|`;
-		console.log(config);
 
 		// Submits the config to Python
 		document.getElementById("j_questions").value = config;
@@ -264,188 +261,4 @@ document.getElementById("add_question").onclick = function()
 	document.getElementById("questions").appendChild(question);
 }
 
-
-function get_questions(config)
-{
-	let c_v = {
-		name: "",
-		value: ""
-	}
-	
-	let questions = [{type: config[0]}]
-
-	for (let i = 2; i < config.length; i++)
-	{
-		let c = config[i]
-		if (c_v.value == "")
-		{
-			if (c == "=")
-			{
-				questions[questions.length-1][c_v.name] = "";
-				i++;
-				c_v.value += config[i];
-			}
-			else c_v.name += c;
-		}
-		else
-		{
-			if (c == ",")
-			{
-				questions[questions.length-1][c_v.name] = c_v.value;
-				c_v.name = "";
-				c_v.value = "";
-			}
-			else if (c == "|")
-			{
-				questions[questions.length-1][c_v.name] = c_v.value;
-				c_v.name = "";
-				c_v.value = "";
-
-				if (config[i + 1] == "|") i = config.length;
-				else
-				{
-					questions.push({type: config[i + 1]});
-					i += 2;
-				}
-			}
-			else c_v.value += c;
-		}
-	}
-
-	return questions;
-}
-
-
-function generate_question(questions)
-{
-	// Gets a random question from the array of questions
-	let question = questions[RNG(1, questions.length) - 1];
-
-	// Generates the question using the settings of the chosen question
-	switch(question.type)
-	{
-		// Addition
-		case "A":
-			x = RNG(parseInt(question.m1), parseInt(question.M1));
-			y = RNG(parseInt(question.m2), parseInt(question.M2));
-
-			if (RNG(1, 2) == 2) return[`${z(x)} + ${z(y)}`, x + y];
-			else return[`${z(y)} + ${z(x)}`, x + y];
-
-		// Subtraction
-		case "S":
-			if (question.N == "y")
-			{
-				x = RNG(parseInt(question.m1), parseInt(question.M1));
-				y = RNG(parseInt(question.m2), parseInt(question.M2));
-
-				if (RNG(1, 2) == 2) return[`${z(x)} - ${z(y)}`, x - y];
-				else return[`${z(y)} - ${z(x)}`, y - x];
-			}
-			else
-			{
-				x = RNG(parseInt(question.m1), parseInt(question.M1));
-				y = RNG(parseInt(question.m2), parseInt(question.M2));
-
-				if (RNG(1, 2) == 2) return[`${z(x + y)} - ${z(y)}`, x];
-				else return[`${z(x + y)} - ${z(x)}`, y];
-			}
-
-		// Multiplication
-		case "M":
-			x = RNG(parseInt(question.m1), parseInt(question.M1));
-			y = RNG(parseInt(question.m2), parseInt(question.M2));
-
-			if (RNG(1, 2) == 2) return[`${z(x)} × ${z(y)}`, x * y];
-			else return[`${z(y)} × ${z(x)}`, x * y];
-
-		// Division
-		case "D":
-			x = RNG(parseInt(question.m1), parseInt(question.M1));
-			y = RNG(parseInt(question.m2), parseInt(question.M2));
-
-			if (RNG(1, 2) == 2) return[`${z(x*y)} ÷ ${z(y)}`, x];
-			else return[`${z(y*x)} ÷ ${z(x)}`, y];
-
-		// Exponents
-		case "E":
-			x = RNG(parseInt(question.m1), parseInt(question.M1));
-			y = RNG(parseInt(question.m2), parseInt(question.M2));
-
-			return [`${z(x)}^${y}`, x**y];
-
-		// Roots
-		case "R":
-			x = RNG(parseInt(question.m1), parseInt(question.M1));
-			y = RNG(parseInt(question.m2), parseInt(question.M2));
-
-			return [`what is the ${roots[y - 1]} root of ${z(x**y)}`, x];
-	}
-}
-
-
-function get_config(config)
-{
-	let c_v = {
-		name: "",
-		value: "",
-		phase: 1
-	}
-	
-	let settings = {}
-
-	for (let i = 2; i < config.length; i++)
-	{
-		let c = config[i]
-		if (c == "|" && config[i + 1] == "|")
-		{
-			c_v.phase = 2;
-			i++;
-		}
-		else if (c_v.phase == 2)
-		{
-
-			if (c_v.value == "")
-			{
-				if (c == "=")
-				{
-					settings[c_v.name] = "";
-					i++;
-					c_v.value += config[i];
-				}
-				else c_v.name += c;
-			}
-			else
-			{
-				if (c == "|")
-				{
-					settings[c_v.name] = c_v.value;
-					c_v.name = "";
-					c_v.value = "";
-				}
-				else c_v.value += c;
-			}
-		}
-	}
-
-	return settings;
-}
-
-
-function RNG(min, max)
-{
-	let r = 0;
-	while (r == 0)
-	{
-		r = (Math.floor(Math.random()*(max - min + 1)) + min);
-	}
-	return r;
-}
-
-
-function z(number)
-{
-	if (number < 0) return `(${number})`
-	else return number.toString();
-}
 

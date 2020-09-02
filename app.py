@@ -189,10 +189,11 @@ def custom():
             # User is signed in, so we need to update the SQL database
             db.execute("UPDATE presets SET questions=:config WHERE preset_name=:preset_name",
                     config=request.form.get("j_questions"),
-                    preset_name=TODO)
+                    preset_name=TODO,
+                    user=user)
 
     # Serve them the new customized.html page using the config they just made in custom.html
-    return render_template("customized.html", config=request.form.get("j_questions"))
+    return render_template("customized.html", user="", config=request.form.get("j_questions"))
 
 
 # Give user an automatically generate workout

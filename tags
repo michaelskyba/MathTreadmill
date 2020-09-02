@@ -5,42 +5,35 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 RNG	static/auto.js	/^function RNG(min, max)$/;"	f
-RNG	static/customized.js	/^function RNG(min, max)$/;"	f
+RNG	static/custom-ized.js	/^function RNG(min, max)$/;"	f
 after_request	app.py	/^def after_request(response):$/;"	f
 app	app.py	/^app = Flask(__name__)$/;"	v
 auto	app.py	/^def auto():$/;"	f
 configure	static/auto.js	/^function configure(skill)$/;"	f
-configure	static/customized.js	/^function configure(skill)$/;"	f
 custom	app.py	/^def custom():$/;"	f
 db	app.py	/^db = SQL("sqlite:\/\/\/mt.db")$/;"	v
 document.getElementById	static/auto.js	/^document.getElementById("music").onclick = function()$/;"	f
-document.getElementById	static/custom.js	/^document.getElementById("preset_dropdown").onchange = function()$/;"	f
-document.getElementById	static/customized.js	/^document.getElementById("music").onclick = function()$/;"	f
+document.getElementById	static/custom.js	/^document.getElementById("start").onclick = function()$/;"	f
 document.getElementById	static/profile.js	/^document.getElementById("username").onclick = function()$/;"	f
 document.getElementById	static/register.js	/^document.getElementById("submit_button").onclick = function()$/;"	f
 document.getElementById	static/signin.js	/^document.getElementById("submit_button").onclick = function()$/;"	f
+dropdown.onchange	static/custom.js	/^	dropdown.onchange = function()$/;"	f
 generate_question	static/auto.js	/^function generate_question(skill)$/;"	f
-generate_question	static/custom.js	/^function generate_question(questions)$/;"	f
-generate_question	static/customized.js	/^function generate_question(skill)$/;"	f
-get_config	static/custom.js	/^function get_config(config)$/;"	f
-get_config	static/customized.js	/^function get_config(config)$/;"	f
-get_question	static/customized.js	/^function get_question(config)$/;"	f
-get_questions	static/custom.js	/^function get_questions(config)$/;"	f
+generate_question	static/custom-ized.js	/^function generate_question(m_questions)$/;"	f
+get_config	static/custom-ized.js	/^function get_config(config)$/;"	f
 get_user	app.py	/^def get_user():$/;"	f
 index	app.py	/^def index():$/;"	f
+input.onclick	static/custom.js	/^	input.onclick = function()$/;"	f
+input.onkeyup	static/custom.js	/^		input.onkeyup = function()$/;"	f
 logout	app.py	/^def logout():$/;"	f
 main	static/auto.js	/^function main()$/;"	f
-main	static/customized.js	/^function main()$/;"	f
-name	static/custom.js	/^		name: "",$/;"	p	class:let
-name	static/customized.js	/^		name: "",$/;"	p	class:let
-phase	static/custom.js	/^		phase: 1$/;"	p	class:let
-phase	static/customized.js	/^		phase: 1$/;"	p	class:let
+main	static/customized.js	/^function main()$/;"	f	function:document.onkeydown
+name	static/custom-ized.js	/^		name: "",$/;"	p	class:let
+phase	static/custom-ized.js	/^		phase: 1$/;"	p	class:let
 profile	app.py	/^def profile():$/;"	f
 register	app.py	/^def register():$/;"	f
 signin	app.py	/^def signin():$/;"	f
-value	static/custom.js	/^		value: ""$/;"	p	class:let
-value	static/custom.js	/^		value: "",$/;"	p	class:let
-value	static/customized.js	/^		value: ""$/;"	p	class:let
-value	static/customized.js	/^		value: "",$/;"	p	class:let
+value	static/custom-ized.js	/^		value: ""$/;"	p	class:let
+value	static/custom-ized.js	/^		value: "",$/;"	p	class:let
 z	static/auto.js	/^function z(number)$/;"	f
-z	static/customized.js	/^function z(number)$/;"	f
+z	static/custom-ized.js	/^function z(number)$/;"	f
