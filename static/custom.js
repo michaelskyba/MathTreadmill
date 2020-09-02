@@ -17,27 +17,46 @@ let no_questions_button = document.getElementById("no_questions");
 // When the user clicks the "Start" button
 document.getElementById("start").onclick = function()
 {
-	// Transcribe the settings into a string
-	// eg. "M,m1=-14,M1=14,m2=-14,M2=14,N=|D,m1=-14,M1=14,m2=-14,M2=14,N=||R=25|D=0.75|"
-	let config = "";
-
-	// Less typing
-	let jq = j_questions;
-	for (let i = 0; i < jq.length; i++)
+	// Makes sure user entered valid values
+	let valid = true;
+	if (isNaN(parseInt(document.getElementById("reset_time").value))) valid = false;
+	if (isNaN(parseInt(document.getElementById("decrement").value))) valid = false;
+	for (let i = 0; i < j_questions.length; i++)
 	{
-		config += jq[i].type[0] + ",m1=";
-		config += jq[i].Min1 + ",M1=";
-		config += jq[i].Max1 + ",m2=";
-		config += jq[i].Min2 + ",M2=";
-		config += jq[i].Max2 + ",N=";
-		config += jq[i].an + "|";
+		if (j_questions[i].type == "") valid = false;
+		if (isNaN(parseInt(j_questions[i].Min1))) valid = false;
+		if (isNaN(parseInt(j_questions[i].Min2))) valid = false;
+		if (isNaN(parseInt(j_questions[i].Max1))) valid = false;
+		if (isNaN(parseInt(j_questions[i].Max2))) valid = false;
+		if (j_questions[i].type == "Subtraction" && j_questions[i].an == "") valid = false;
 	}
-	config += `|R=${document.getElementById("reset_time").value}|D=${document.getElementById("decrement").value}|`;
-	console.log(config);
+	
+	if (valid)
+	{
 
-	// Submits the config to Python
-	document.getElementById("j_questions").value = config;
-	document.getElementById("custom_form").submit();
+		// Transcribe the settings into a string
+		// eg. "M,m1=-14,M1=14,m2=-14,M2=14,N=|D,m1=-14,M1=14,m2=-14,M2=14,N=||R=25|D=0.75|"
+		let config = "";
+
+		// Less typing
+		let jq = j_questions;
+		for (let i = 0; i < jq.length; i++)
+		{
+			config += jq[i].type[0] + ",m1=";
+			config += jq[i].Min1 + ",M1=";
+			config += jq[i].Max1 + ",m2=";
+			config += jq[i].Min2 + ",M2=";
+			config += jq[i].Max2 + ",N=";
+			config += jq[i].an + "|";
+		}
+		config += `|R=${document.getElementById("reset_time").value}|D=${document.getElementById("decrement").value}|`;
+		console.log(config);
+
+		// Submits the config to Python
+		document.getElementById("j_questions").value = config;
+		document.getElementById("custom_form").submit();
+	}
+	else alert("Invalid options set");
 }
 
 
