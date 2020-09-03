@@ -179,8 +179,18 @@ def custom():
             return render_template("custom.html", user="")
 
         # User is signed in, and is viewing the page normally
-        presets = db.execute("SELECT questions, preset_name FROM presets WHERE userid=:user_id;", user_id=session["user_id"]);
-        return render_template("custom.html", user=user, presets=presets);
+        presets = db.execute("SELECT questions, preset_name FROM presets WHERE userid=:user_id;", user_id=session["user_id"])
+        return render_template("custom.html", user=user, presets=presets)
+
+    if user != "" and request.form.get("delete_preset") != "":
+        # User wants to delete a preset
+        db.execute("DELETE FROM presets WHERE userid=:user_id AND preset_name=:preset_name;",
+        user_id=session["user_id"],
+        preset_name=request.form.get("delete_preset"))
+
+        # Let them see the page again
+        presets = db.execute("SELECT questions, preset_name FROM presets WHERE userid=:user_id;", user_id=session["user_id"])
+        return render_template("custom.html", user=user, presets=presets)
 
     if user != "" and request.form.get("preset_dropdown") != "":
             # User is signed in, so we need to update the SQL database

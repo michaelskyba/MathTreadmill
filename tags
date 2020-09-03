@@ -10,7 +10,7 @@ after_request	app.py	/^def after_request(response):$/;"	f
 app	app.py	/^app = Flask(__name__)$/;"	v
 auto	app.py	/^def auto():$/;"	f
 configure	static/auto.js	/^function configure(skill)$/;"	f
-create_question	static/custom.js	/^function create_question(cq_question)$/;"	f
+create_question	static/custom.js	/^function create_question(cq_question)$/;"	f	function:reset_questions
 custom	app.py	/^def custom():$/;"	f
 db	app.py	/^db = SQL("sqlite:\/\/\/mt.db")$/;"	v
 document.getElementById	static/auto.js	/^document.getElementById("music").onclick = function()$/;"	f
@@ -18,6 +18,9 @@ document.getElementById	static/custom.js	/^document.getElementById("help").oncli
 document.getElementById	static/profile.js	/^document.getElementById("username").onclick = function()$/;"	f
 document.getElementById	static/register.js	/^document.getElementById("submit_button").onclick = function()$/;"	f
 document.getElementById	static/signin.js	/^document.getElementById("submit_button").onclick = function()$/;"	f
+document.onkeydown	static/custom.js	/^document.onkeydown = function(e)$/;"	f
+document.onkeydown	static/register.js	/^document.onkeydown = function(e)$/;"	f
+document.onkeydown	static/signin.js	/^document.onkeydown = function(e)$/;"	f
 dropdown.onchange	static/custom.js	/^	dropdown.onchange = function()$/;"	f
 generate_question	static/auto.js	/^function generate_question(skill)$/;"	f
 generate_question	static/custom-ized.js	/^function generate_question(m_questions)$/;"	f
@@ -34,6 +37,8 @@ phase	static/custom-ized.js	/^		phase: 1$/;"	p	class:let
 profile	app.py	/^def profile():$/;"	f
 register	app.py	/^def register():$/;"	f
 signin	app.py	/^def signin():$/;"	f
+submit_form	static/register.js	/^function submit_form()$/;"	f
+submit_form	static/signin.js	/^function submit_form()$/;"	f
 value	static/custom-ized.js	/^		value: ""$/;"	p	class:let
 value	static/custom-ized.js	/^		value: "",$/;"	p	class:let
 z	static/auto.js	/^function z(number)$/;"	f

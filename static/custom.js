@@ -76,7 +76,7 @@ function reset_questions()
 	let h_questions = document.getElementsByClassName("question");
 	for (let i = 0; i < h_questions.length; i++)
 	{
-		h_questions[i].remove();
+		h_questions[0].remove();
 	}
 
 	j_questions = []
@@ -95,6 +95,12 @@ document.getElementById("preset_dropdown").onchange = function()
 		else if (new_name == "New preset" || presets.indexOf(new_name) != -1)
 		{
 			alert("Really?");
+			this.value = "";
+		}
+		else if (!isNaN(new_name))
+		{
+			alert("Your preset name cannot be a number");
+			alert("If you really want a number, type it out, like 'five' instead of '5'");
 			this.value = "";
 		}
 		else
@@ -314,3 +320,47 @@ document.getElementById("add_question").onclick = function()
 }
 
 
+// Allows users to delete stuf0
+document.onkeydown = function(e)
+{
+	e = e || window.event;
+
+	// When user clicks d
+	if (e.keyCode == 68)
+	{
+		let answer = prompt("What do you want to delete? Type a preset name or a question number");
+
+		// User wants to delete a question
+		if (!isNaN(answer))
+		{
+			if (j_questions.length + 1 > parseInt(answer) && parseInt(answer) > 0)
+			{
+				// Delete that question
+				j_questions.splice(parseInt(answer) - 1, 1);
+
+				// Redraw all the questions
+				let h_questions = document.getElementsByClassName("question");
+				let length = h_questions.length;
+				for (let i = 0; i < length; i++)
+				{
+					h_questions[0].remove();
+				}
+
+				// Generate html
+				for (let i = 0; i < j_questions.length; i++)
+				{
+					create_question(j_questions[i]);
+				}
+
+				if (j_questions.length == 0) document.getElementById("questions").appendChild(no_questions_text);
+			}
+		}
+
+		// Users wants to delete a preset
+		else if (presets.indexOf(answer) != -1 && "Sign in to save presets!")
+		{
+			document.getElementById("delete_preset").value = answer;
+			document.getElementById("custom_form").submit();
+		}
+	}
+}

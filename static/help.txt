@@ -1,5 +1,5 @@
 
-This is the help menu for the "Custom" page of MathTreadmill ("/custom").
+This is the help menu for the "Custom" page of MathTreadmill ("/custom")
 
 You can read this if you do not understand how to use /custom
 (if you are an average user who is seeing the custom page for the first time, this will likely be the case).
@@ -129,9 +129,9 @@ Start Button
 
 	so don't leave any inputs blank, etc.
 
-Delete Button
-	the delete button is used to delete questions and presets
-	click it and follow the instructions if you want to delete a preset or a question
+Deleting
+	the d key is used to delete questions and presets
+	press it and follow the instructions if you want to delete a preset or a question
 
 
 
