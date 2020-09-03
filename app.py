@@ -182,9 +182,6 @@ def custom():
         presets = db.execute("SELECT questions, preset_name FROM presets WHERE userid=:user_id;", user_id=session["user_id"]);
         return render_template("custom.html", user=user, presets=presets);
 
-    # Get the users question and convert it into a form that customized.js can use
-    print(request.form.get("preset_dropdown"))
-
     if user != "" and request.form.get("preset_dropdown") != "":
             # User is signed in, so we need to update the SQL database
 
@@ -194,14 +191,14 @@ def custom():
                 db.execute("INSERT INTO presets (userid, questions, preset_name) VALUES (:userid, :questions, :name);",
                 userid=session["user_id"],
                 questions=request.form.get("j_questions"),
-                name=request.form.get("preset_dropdown"))
+                name=request.form.get("preset_name"))
 
             else:
                 # Update their existing preset
                 db.execute("UPDATE presets SET questions=:questions WHERE preset_name=:preset_name AND userid=:userid",
                 questions=request.form.get("j_questions"),
-                preset_name=request.form.get("preset_dropdown"),
-                userid=session["userid"])
+                preset_name=request.form.get("preset_name"),
+                userid=session["user_id"])
 
     # Serve them the new customized.html page using the config they just made in custom.html
     return render_template("customized.html", user=user, config=request.form.get("j_questions"))

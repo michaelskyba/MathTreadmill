@@ -1,4 +1,4 @@
-// Keeps track of the questions made "javscript questions?"
+// Keeps track of the questions made in current preset "javscript questions?"
 let j_questions = [];
 
 // Keeps track of user's presets
@@ -9,14 +9,15 @@ for (let i = 0; i < preset_elements.length; i++)
 	presets.push(preset_elements[i].innerHTML);
 }
 
+// Easy to add the no questions text if we delete it
+let no_questions_text = document.getElementById("no_questions");
+
+
 // Help page
 document.getElementById("help").onclick = function()
 {
 	window.location.href = "./static/help.txt";
 }
-
-// Easy to add the no questions text if we delete it
-let no_questions_button = document.getElementById("no_questions");
 
 
 // When the user clicks the "Start" button
@@ -26,13 +27,16 @@ document.getElementById("start").onclick = function()
 	let valid = true;
 	if (isNaN(parseInt(document.getElementById("reset_time").value))) valid = false;
 	if (isNaN(parseInt(document.getElementById("decrement").value))) valid = false;
+	if (j_questions.length == 0) valid = false;
 	for (let i = 0; i < j_questions.length; i++)
 	{
 		if (j_questions[i].type == "") valid = false;
-		if (isNaN(parseInt(j_questions[i].Min1))) valid = false;
-		if (isNaN(parseInt(j_questions[i].Min2))) valid = false;
-		if (isNaN(parseInt(j_questions[i].Max1))) valid = false;
-		if (isNaN(parseInt(j_questions[i].Max2))) valid = false;
+		if (isNaN(parseInt(j_questions[i].m1))) valid = false;
+		if (isNaN(parseInt(j_questions[i].M2))) valid = false;
+		if (isNaN(parseInt(j_questions[i].M1))) valid = false;
+		if (isNaN(parseInt(j_questions[i].m2))) valid = false;
+		if (parseInt(j_questions[i].m1) > parseInt(j_questions[i].M1)) valid = false;
+		if (parseInt(j_questions[i].m2) > parseInt(j_questions[i].M2)) valid = false;
 		if (j_questions[i].type == "Subtraction" && j_questions[i].an == "") valid = false;
 	}
 	
@@ -48,10 +52,10 @@ document.getElementById("start").onclick = function()
 		for (let i = 0; i < jq.length; i++)
 		{
 			config += jq[i].type[0] + ",m1=";
-			config += jq[i].Min1 + ",M1=";
-			config += jq[i].Max1 + ",m2=";
-			config += jq[i].Min2 + ",M2=";
-			config += jq[i].Max2 + ",N=";
+			config += jq[i].m1 + ",M1=";
+			config += jq[i].M1 + ",m2=";
+			config += jq[i].m2 + ",M2=";
+			config += jq[i].M2 + ",N=";
 			if (jq[i].an == "") jq[i].an = " ";
 			config += jq[i].an + "|";
 		}
@@ -62,6 +66,20 @@ document.getElementById("start").onclick = function()
 		document.getElementById("custom_form").submit();
 	}
 	else alert("Invalid options set");
+}
+
+
+// Resets on-screen questions
+function reset_questions()
+{
+
+	let h_questions = document.getElementsByClassName("question");
+	for (let i = 0; i < h_questions.length; i++)
+	{
+		h_questions[i].remove();
+	}
+
+	j_questions = []
 }
 
 
@@ -87,6 +105,19 @@ document.getElementById("preset_dropdown").onchange = function()
 
 			// Tells Python later that a new preset was made
 			document.getElementById("new_preset?").value = "Yes";
+
+			// Reset questions
+			reset_questions();
+
+			// Tells flask the name of the preset
+			document.getElementById("preset_name").value = new_name;
+
+			// Resets config
+			document.getElementById("decrement").value = "";
+			document.getElementById("reset_time").value = "";
+
+			// Put back the "no questions" text
+			document.getElementById("questions").appendChild(no_questions_text);
 		}
 	}
 	else
@@ -96,37 +127,35 @@ document.getElementById("preset_dropdown").onchange = function()
 		document.getElementById("np").innerHTML = "New preset";
 		document.getElementById("new_preset?").value = "No";
 
+		// Reset questions
+		reset_questions();
+
 		// Gets the questions from the user's preset
-		let questions = get_questions(this.value);
+		j_questions = get_questions(this.value);
 
-		// Remove "no questions" text if it is false
-		if (questions.length != 0)
+		// Updates config
+		let temp_config = get_config(this.value);
+		document.getElementById("decrement").value = temp_config.D;
+		document.getElementById("reset_time").value = temp_config.R
+
+		// Tells flask the name of the preset
+		document.getElementById("preset_name").value = this.options[this.selectedIndex].innerHTML;
+
+		// Remove "no questions" text since it is false: you cannot make an empty preset
+		no_questions_text.remove();
+
+		// Generate html
+		for (let i = 0; i < j_questions.length; i++)
 		{
-			no_questions_button.remove();
-		}
-
-		// Iterates over questions and generates HTML
-		for (let i = 0; i < questions.length; i++)
-		{
-			let question = document.createElement("div");
-			question.style = "margin: 10px; padding: 10px; border: 1px solid;";
-			
-			let p = document.createElement("p");
-			p.innerHTML = `Question No. ${i}`;
-
-			question.appendChild(p);
-			document.getElementById("questions").appendChild(question);
+			create_question(j_questions[i]);
 		}
 	}
 }
 
 
-// When you click the + button
-document.getElementById("add_question").onclick = function()
+// Creates a question
+function create_question(cq_question)
 {
-	// Adds another question to j_questions
-	j_questions.push({type: "", Min1: "", Max1: "", Min2: "", Max2: "", an: ""});
-
 	// Creates the question element
 	let question = document.createElement("div");
 	question.className = "question";
@@ -150,7 +179,7 @@ document.getElementById("add_question").onclick = function()
 	if (questions.length == 0)
 	{
 		// Removes "no questions" text, since you added a question, thus making the amount of qusetions > 0
-		no_questions_button.remove();
+		no_questions_text.remove();
 		question.style.marginTop = "10px";
 	}
 
@@ -187,6 +216,7 @@ document.getElementById("add_question").onclick = function()
 		option = document.createElement("option");
 		option.innerHTML = types[i];
 		option.value = types[i];
+		if (cq_question.type == types[i][0]) option.selected = true;
 		dropdown.appendChild(option);
 	}
 	div.appendChild(dropdown);
@@ -197,13 +227,14 @@ document.getElementById("add_question").onclick = function()
 	question.appendChild(div);
 
 	// Min and max settings
-	let settings = ["Min1", "Max1", "Min2", "Max2"];
+	let settings = ["m1", "M1", "m2", "M2"];
 	for (let i = 0; i < 4; i++)
 	{
 		let input = document.createElement("input");
 		input.type = "text";
 		input.style = "width: 40px; text-align: center; justify-self: center;"
 		input.placeholder = settings[i];
+		input.value = cq_question[settings[i]];
 		input.onkeyup = function()
 		{
 			j_questions[id][settings[i]] = this.value;
@@ -224,10 +255,9 @@ document.getElementById("add_question").onclick = function()
 	dropdown.disabled = true;
 	dropdown.onchange = function()
 	{
-		if (this.value == "Yes") j_questions[id].an = "y";
-		else j_questions[id].an = "n";
+		j_questions[id].an = this.value;
 	}
-	let settings2 = ["Yes", "No"];
+	let settings2 = ["y", "n"];
 	option = document.createElement("option");
 	option.innerHTML = "AN (Sub)?";
 	option.disabled = true;
@@ -239,6 +269,7 @@ document.getElementById("add_question").onclick = function()
 		option = document.createElement("option");
 		option.innerHTML = settings2[i];
 		option.value = settings2[i];
+		if (cq_question.N == settings2[i]) option.selected = true;
 		dropdown.appendChild(option);
 	}
 	div.appendChild(dropdown);
@@ -254,15 +285,15 @@ document.getElementById("add_question").onclick = function()
 		let valid = true;
 		let c = j_questions[id];
 		if (c.type == "") valid = false;
-		if (c.Min1 == "") valid = false;
-		if (c.Min2 == "") valid = false;
-		if (c.Max1 == "") valid = false;
-		if (c.Max2 == "") valid = false;
+		if (c.m1 == "") valid = false;
+		if (c.m2 == "") valid = false;
+		if (c.M1 == "") valid = false;
+		if (c.M2 == "") valid = false;
 		if (c.type == "Subtraction" && c.an == "") valid = false;
 
 		if (valid)
 		{
-			let result = generate_question([{N: c.an, type: c.type[0], m1: c.Min1, M1: c.Max1, m2: c.Min2, M2: c.Max2}]);
+			let result = generate_question([{N: c.an, type: c.type[0], m1: c.m1, M1: c.M1, m2: c.m2, M2: c.M2}]);
 			alert(`${result[0]} = ${result[1]}`);
 		}
 		else alert("Invalid options set");
@@ -271,6 +302,15 @@ document.getElementById("add_question").onclick = function()
 
 	// Finally adds the question into the page
 	document.getElementById("questions").appendChild(question);
+}
+
+// When you click the + button
+document.getElementById("add_question").onclick = function()
+{
+	// Adds another question to j_questions
+	j_questions.push({type: "", m1: "", M1: "", m2: "", M2: "", N: ""});
+
+	create_question({type: "", m1: "", M1: "", m2: "", M2: "", N: ""});
 }
 
 
