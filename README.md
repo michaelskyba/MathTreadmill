@@ -1,5 +1,6 @@
 # MathTreadmill
 A small web application for practicing your mental arithmetic skills.
+https://github.com/michaelskyba/MathTreadmill
 
 ## made by Michael Skyba
 https://github.com/michaelskyba/
@@ -19,5 +20,6 @@ Know issues that I am too lazy to fix:
 - help.txt is difficult to understand, and /custom without help.txt is even more difficult to understand
 - dark souls music is not copyright-free, so MathTreadmill might get taken down (unlikely)
 - the code is sloppy and not maintainable long-term
+- I didn't use "transactions" (no idea what they are) so there is a possibility of race conditions
 - the commit messages are a mess
 - MathTreadmill is terrible on mobile (please don't use it on mobile)
