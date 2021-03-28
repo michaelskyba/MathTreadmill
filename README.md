@@ -4,7 +4,6 @@ https://github.com/michaelskyba/MathTreadmill
 
 ## made by Michael Skyba
 https://github.com/michaelskyba/
-https://www.linkedin.com/in/michael-skyba-03b7b7193/
 
 In MathTreadmill, you can either train at your own pace (using "Custom" mode), or you can use "Auto" mode, which uses a pre-made path of training. It starts easy, but will get more and more difficult. The \*.4 levels are designed to be extra-difficult, so don't be discouraged if you have trouble with those.
 
