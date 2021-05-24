@@ -1,6 +1,14 @@
 # MathTreadmill
 A small web application for practicing your mental arithmetic skills.
-https://github.com/michaelskyba/MathTreadmill
+
+## Trying it out
+```bash
+git clone https://github.com/michaelskyba/MathTreadmill.git
+cd MathTreadmill
+flask run
+```
+Now, you'll probably get a few "module not found errors". You'll need to run
+``pip install <module>`` to install them.
 
 ## made by Michael Skyba
 https://github.com/michaelskyba/
