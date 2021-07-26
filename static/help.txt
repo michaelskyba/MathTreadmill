@@ -11,6 +11,8 @@ It is helpful to have a tab open of this help page, as well as a tab open of the
 To do this, duplicate the current tab (right-click the current tab and select "Duplicate")
 and then go backwards in history (on Firefox and Chrome, you can do Alt + left arrow)
 
+OR, if you're on qutebrowser (based), use the "th" binding
+
 Presets
 	A preset is basically just a collection of questions.
 	For example, you might have a preset specifically for practicing doing 1x1 to 20x20 multiplication in less than 10 seconds,
@@ -135,6 +137,6 @@ Deleting
 
 
 
-Also, sorry about the /custom page being generally slow and clunky... If I knew how to fix it, I would
+Also, sorry about the /custom page being generally slow and clunky
 
 
